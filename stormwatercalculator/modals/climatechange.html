@@ -1,0 +1,93 @@
+<div id="climateChangeModal">
+	<div class="row">
+		<div class="col-md-6">
+			<h3>Climate Change</h3>
+			<div class="panel-group">
+		      <div class="panel panel-default">
+		        <div class="panel-heading" ng-controller="modalCtrl">
+		          <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse1" ng-click="openCloseDirections();"><h4 class="panel-title">Directions<i class="fa fa-chevron-right directionsIcon" aria-hidden="true"></i></h4></a>
+		        </div>
+		        <div id="collapse1" class="panel-collapse collapse in">
+		          <div class="panel-body"><p>The effect that climate change has on site hydrology can be examined by selecting from a set of downscaled climate projections produced by the World Climate Research Programme. A range of future changes in temperature and precipitation have been generated for each National Weather Service station in the calculator's database.</p>
+                  <p>There are three climate scenarios to choose from that span the range from hot and dry conditions to warm and wet ones. Projections for each scenario are available for two future periods in time, 2020-2049 and 2045-2074.</p>
+                  <p>The effect that these climate projections have on monthly average rainfall and annual extreme rainfall events are shown graphically in the right hand panel. These effects will change with choice of rain gage location and projection year.</p>
+                  <p>(An annual max. day rainfall X with a return period of Y years means that on average, a 24-hour storm greater than X inches will occur only once every Y years.)</p>
+                  <p>The effect of future temperature changes on monthly evaporation rates were also considered but are not shown because the variation between scenarios is quite small.</p>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		    <div class="panel-group">
+		      <div class="panel panel-default">
+		        <div class="panel-heading">
+		          <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse2" ng-click="openCloseDirections2();"><h4 class="panel-title">Helpful Resources<i class="fa fa-chevron-right directionsIcon2" aria-hidden="true"></i>
+		          </h4></a>
+		        </div>
+		        <div id="collapse2" class="panel-collapse collapse in">
+		          <div class="panel-body">                      <p><a href="https://scenarios.globalchange.gov/regions" target="_blank">Scenarios for Climate Assessment and Adaptation - Regions</a></p>
+                  <p><a href="http://www.globalchange.gov/explore" target="_blank">GlobalChange.gov - Regions &amp; Topics</a></p>
+                  <p><a href="https://www.epa.gov/climate-change-science/future-climate-change" target="_blank">US Environmental Protection Agency - Future of Climate Change</a></p>
+                  <p><a href="https://www.wcrp-climate.org/" target="_blank">World Climate Research Programme</a></p>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		    <fieldset>
+	            <legend>Select a future climate change scenario to apply:</legend>
+	            <div class="form-group">
+					<div class="radio">
+					    <label>
+					        <input type="radio" id="noChangeRadio" name="scenarioRadio" ng-click="checkClimateScenario()">No Change
+					    </label>
+					</div>
+					<div class="radio">
+					    <label>
+					             <input type="radio" id="hotDryRadio" name="scenarioRadio" ng-click="checkClimateScenario()">Hot/Dry
+					    </label>
+					</div>
+					<div class="radio">
+					    <label>
+					        <input type="radio" id="medianRadio" name="scenarioRadio" ng-click="checkClimateScenario()">Median Change
+					    </label>
+					</div>
+					<div class="radio">
+					    <label>
+
+									 <input type="radio" id="warmWetRadio" name="scenarioRadio" ng-click="checkClimateScenario()">Warm/Wet
+					    </label>
+					</div>
+				</div>
+	        </fieldset>
+	        <fieldset>
+	            <legend>Select the time period to which the climate change scenario applies:</legend>
+	            <div class="form-group">
+					<div class="radio">
+					    <label>
+					        <input type="radio" id="nearTermRadio" name="timeRadio" ng-click="getNearTermData()">Near Term (2020 - 2049)
+					    </label>
+					</div>
+					<div class="radio">
+					    <label>
+					        <input type="radio" id="farTermRadio" name="timeRadio" ng-click="getFarTermData()">Far Term (2045 - 2074)
+					    </label>
+					</div>
+				</div>
+	        </fieldset>
+	        <div class="row" style="margin-bottom: 20px">
+	        	<div class="col-md-3">
+			    	<button ng-click="printPDF()">Print Charts to PDF File</button>
+			    </div>
+	        </div>
+		</div>
+		<div class="col-md-6 text-center" id="climateChangeCharts">
+			<h4 id="percentageChangeHeader">Percentage Change in Monthly Rainfall for Near Term Projections</h4>
+			<canvas id="line" class="chart chart-line" chart-data="data1" chart-labels="label1" chart-series="series1" chart-click="onClick" chart-colors="colors1" chart-options="data1Options"></canvas>
+			<img class="chartImages" id="percentageChangeChartImage" />
+			<h4 id="maxRainfallHeader">Annual Max. Day Rainfall (inches) for Near Term Projections</h4>
+			<canvas id="line2" class="chart chart-line" chart-data="data2" chart-labels="label2" chart-series="series2" chart-click="onClick" chart-colors="colors2" chart-options="data2Options"></canvas>
+			<img class="chartImages" id="maxRainfallChartImage" />
+		</div>
+		<canvas height="275px" width="550px" class="chart chart-line chartPDFs" chart-data="data1" chart-labels="label1" chart-series="series1" chart-click="onClick" chart-colors="colors1" chart-options="data1OptionsPDF"></canvas>
+		<canvas height="275px" width="550px" class="chart chart-line chartPDFs" chart-data="data2" chart-labels="label2" chart-series="series2" chart-click="onClick" chart-colors="colors2" chart-options="data2OptionsPDF"></canvas>
+	</div>
+</div>

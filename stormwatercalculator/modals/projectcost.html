@@ -1,0 +1,76 @@
+<div id="projectCostModal">
+  <div class="row">
+   <div class="col-md-12">
+      <h3>Project Cost</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading" ng-controller="modalCtrl">
+            <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse1" ng-click="openCloseDirections();" style="color: #000;"><h4 class="panel-title">Directions<i class="fa fa-chevron-right directionsIcon" aria-hidden="true"></i></h4></a>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body"><p>Verify cost estimation variables below. Click on each option to learn more.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <fieldset>
+        <legend>Choose a Project Type</legend>
+        <div class="radio">
+          <label>
+            <input type="radio" name="projectTypeRadio" id="reDevelopmentRadio" ng-click="changeProjectType('reDevelopment')"><a data-toggle="modal" data-target="#reDevelopmentModal" class="link">Re-Development</a>
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="projectTypeRadio" id="newDevelopmentRadio" ng-click="changeProjectType('newDevelopment')"><a data-toggle="modal" data-target="#newDevelopmentModal" class="link">New Development</a>
+          </label>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <fieldset>
+        <legend>Choose your Site Suitabiltiy</legend>
+        <div class="radio">
+          <label>
+            <input type="radio" name="siteSuitabilityRadio" id="poorRadio" ng-click="changeSiteSuitability('poor')"><a data-toggle="modal" data-target="#poorModal" class="link">Poor</a>
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="siteSuitabilityRadio" id="moderateRadio" ng-click="changeSiteSuitability('moderate')"><a data-toggle="modal" data-target="#moderateModal" class="link">Moderate</a>
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="siteSuitabilityRadio" id="excellentRadio" ng-click="changeSiteSuitability('excellent')"><a data-toggle="modal" data-target="#excellentModal" class="link">Excellent</a>
+          </label>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <fieldset>
+        <legend>Choose your Cost Region</legend>
+        <label for="costRegionSelect"><a data-toggle="modal" data-target="#costRegionModal" class="link">Cost Region:</a></label>
+        <select id="costRegionSelect" class="form-control" ng-model="costRegionSelect" data-ng-options="items.value as items.name for items in costNames" ng-change="changeCostRegion()">
+        </select>
+        <br>
+        <div class="form-group">
+          <label for="regionalMultiplierValue">Regional Multiplier:</label>
+          <input type="number" id="regionalMultiplierValue" ng-model="regionalMultiplierValue" ng-change="changeMultiplierValue()" class="form-control" min="0" step="0.1" disabled />
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>

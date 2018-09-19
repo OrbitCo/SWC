@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="swcalculator-server:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="swcalculator-server.war">
+      <element id="artifact" artifact-name="swcalculator-server:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,340 @@
+<div id="resultsModal">
+	<div class="row">
+		<div class="col-md-6">
+			<h3>Results</h3>
+			<div class="panel-group">
+		      <div class="panel panel-default">
+		        <div class="panel-heading" ng-controller="modalCtrl">
+		          <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse1" ng-click="openCloseDirections();"><h4 class="panel-title">Directions<i class="fa fa-chevron-right directionsIcon" aria-hidden="true"></i></h4></a>
+		        </div>
+		        <div id="collapse1" class="panel-collapse collapse in">
+		          <div class="panel-body"><p>The Results page is where the site's hydrologic response to a long term period of historical hourly rainfall is computed and reported on. Statistics for both annual and daily rainfall/runoff are presented.</p>
+                  <p>The user controls on this page are grouped together in three sections:</p>
+                  <h5>1. Options</h5>
+                  <p>The Options section allows you to specify how the rainfall record should be analyzed with respect to:</p>
+                  <ul>
+                    <li>The number of most recent years of rainfall record to use,</li>
+                    <li>The minimum amount of daily rainfall or runoff that will constitute a measurable event,</li>
+                    <li>Whether subsequent days of back to back daily events should be counted or not.</li>
+                  </ul>
+                  <h5>2. Actions</h5>
+                  <p>The Actions section contains commands that allow you to:</p>
+                  <ul>
+                    <li>Refresh results after site data have changed.</li>
+                    <li>Use the most current results as a baseline scenario that can be compared with results from subsequent runs.</li>
+                  </ul>
+                  <h5>3. Reports</h5>
+                  <p>The Reports section allows you to select how the rainfall/runoff results generated for the site should be displayed.</p>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		    <h4>Options:</h4>
+		    <div class="row">
+			    <div class="col-md-4">
+			    	<div class="form-group">
+				        <label for="yearsValue">Years to Analyze:</label>
+				        <input type="number" class="form-control" min="1" max="{{yearsValueTemp}}" step="1" ng-model="yearsValue" id="yearsValue" ng-change="changeYearsToAnalyze()" />
+				    </div>
+				    <div class="form-group">
+				        <label for="eventValue">Event Threshold:</label>
+				        <input type="number" class="form-control" min="0" step="0.01" ng-model="eventValue" id="eventValue" ng-change="changeEventThreshold()"/>
+				    </div>
+			    </div>
+		    </div>
+		    <div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+				        <label>
+				            <input type="checkbox" ng-click="checkIgnoreDays()" id="ignoreDaysCheckbox">&nbsp;&nbsp;Ignore Consecutive Days
+				        </label>
+				    </div>
+				</div>
+			</div>
+		    <h4>Actions:</h4>
+		    <div class="row">
+			    <div class="col-md-3">
+			    	<button ng-click="generateResults()" id="refreshResultsButton">Refresh Results</button>
+			    </div>
+			    <div class="col-md-3">
+			    	<button ng-click="useAsBaseline()" id="useBaselineButton" disabled>Use as Baseline Scenario</button>
+			    </div>
+			    <div class="col-md-3">
+			    	<button ng-click="removeBaseline()" id="removeBaselineButton" disabled>Remove Baseline Scenario</button>
+			    </div>
+			    <div class="col-md-3">
+			    	<button ng-click="printPDF()" id="resultsPDFButton" disabled>Print Results to PDF File</button>
+			    </div>
+		    </div>
+		    <br>
+		    <h4>Reports:</h4>
+		    <div class="form-group">
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="siteDescriptionRadio" ng-click="changeChartView('siteDescription')">Site Description
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="summaryResultsRadio" ng-click="changeChartView('summaryResults')">Summary Results
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="rainfallRunoffEventsRadio" ng-click="changeChartView('rainfallRunoffEvents')">Rainfall / Runoff Events
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="rainfallRunoffExceedanceRadio" ng-click="changeChartView('rainfallRunoffFrequency')">Rainfall / Runoff Exceedance Frequency
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="rainfallRetentionRadio" ng-click="changeChartView('rainfallRetention')">Rainfall Retention Frequency
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="runoffContributionRadio" ng-click="changeChartView('runoffContribution')">Runoff Contribution by Rainfall Percentile
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="extremeEventRadio" ng-click="changeChartView('extremeEvent')">Extreme Event Rainfall / Runoff
+				    </label>
+				</div>
+				<div class="radio">
+				    <label>
+				        <input type="radio" name="resultsRadio" id="costSummaryRadio" ng-click="changeChartView('costSummary')">Cost Summary
+				    </label>
+				</div>
+				<br>
+				<br>
+			</div>
+			<canvas height="300px" width="300px" id="summaryResultsChart1" class="chart chart-pie chartPDFs" chart-data="summary1Data" chart-labels="summary1Labels" chart-colors="summary1Colors" chart-options="summary1OptionsPDF"></canvas>
+			<canvas height="300px" width="300px" id="summaryResultsChart2" class="chart chart-pie chartPDFs" chart-data="summary2Data" chart-labels="summary1Labels" chart-colors="summary2Colors" chart-options="summary2OptionsPDF"></canvas>
+			<canvas height="275px" width="550px" id="rainfallRunoffEventsChart" class="chart chart-line chartPDFs" chart-data="rainfallRunoffEventsData" chart-series="rainfallRunoffEventsSeries" chart-options="rainfallRunoffEventsOptionsPDF" chart-colors="rainfallRunoffEventsColors"></canvas>
+			<canvas height="275px" width="550px" id="rainfallRunoffFrequencyChart" class="chart chart-line chartPDFs" chart-data="rainfallRunoffFrequencyData" chart-series="rainfallRunoffFrequencySeries" chart-options="rainfallRunoffFrequencyOptionsPDF" chart-colors="rainfallRunoffFrequencyColors"></canvas>
+			<canvas height="275px" width="550px" id="rainfallRetentionChart" class="chart chart-line chartPDFs" chart-data="rainfallRetentionData" chart-series="rainfallRetentionSeries" chart-options="rainfallRetentionOptionsPDF" chart-colors="rainfallRetentionColors"></canvas>
+			<canvas height="275px" width="550px" id="runoffContributionChart" class="chart chart-bar chartPDFs" chart-data="runoffContributionData" chart-series="runoffContributionSeries" chart-labels="runoffContributionLabels" chart-options="runoffContributionOptionsPDF" chart-colors="runoffContributionColors"></canvas>
+			<canvas height="275px" width="550px" id="extremeEventDepthChart" class="chart chart-bar chartPDFs" chart-data="extremeEventDepthData" chart-series="extremeEventSeries" chart-labels="extremeEventLabels" chart-options="extremeEvent1OptionsPDF" chart-colors="extremeEventColors"></canvas>
+			<canvas height="275px" width="550px" id="extremeEventPeakChart" class="chart chart-bar chartPDFs" chart-data="extremeEventPeakData" chart-series="extremeEventSeries" chart-labels="extremeEventLabels" chart-options="extremeEvent2OptionsPDF" chart-colors="extremeEventColors"></canvas>
+			<canvas height="275px" width="550px" id="costsChartCapital" class="chart chart-bar chartPDFs" chart-data="costsDataCapital" chart-series="costsSeries" chart-labels="costsLabels" chart-options="costsOptionsCapitalPDF" chart-colors="costsColors"></canvas>
+			<canvas height="275px" width="550px" id="costsChartMaintenance" class="chart chart-bar chartPDFs" chart-data="costsDataMaintenance" chart-series="costsSeries" chart-labels="costsLabels" chart-options="costsOptionsMaintenancePDF" chart-colors="costsColors"></canvas>
+		</div>
+		<div class="col-md-6 text-center" id="resultsCharts">
+			<div class="resultsView" id="siteDescription">
+				<h4>Site Description</h4>
+				<div class="row">
+					<div id="siteDescriptionTablePDF">
+						<table id="siteDescriptionTable" class="table table-striped">
+						    <thead>
+						      <tr>
+						        <th>Parameter</th>
+						        <th>Current Scenario</th>
+						        <th ng-show="showBaseline">Baseline Scenario</th>
+						      </tr>
+						    </thead>
+						    <tbody class="text-left">
+						    	<th colspan="3">Site Characteristics</th>
+						    	<tr ng-repeat="x in siteDescriptionCharacteristics">
+						    		<td>{{x.Name}}</td>
+						    		<td>{{x.Current}}</td>
+						    		<td ng-show="showBaseline">{{x.Baseline}}</td>
+						    	</tr>
+						    	<th colspan="3">Land Cover</th>
+						    	<tr ng-repeat="x in siteDescriptionLandCover">
+						    		<td>{{x.Name}}</td>
+						    		<td>{{x.Current}}</td>
+						    		<td ng-show="showBaseline">{{x.Baseline}}</td>
+						    	</tr>
+						    	<th colspan="3">LID Controls</th>
+						    	<tr ng-repeat="x in siteDescriptionLIDControls">
+						    		<td>{{x.Name}}</td>
+						    		<td>{{x.Current}}</td>
+						    		<td ng-show="showBaseline">{{x.Baseline}}</td>
+						    	</tr>
+						    	<th colspan="3">Analysis Options</th>
+						    	<tr ng-repeat="x in siteDescriptionOptions">
+						    		<td>{{x.Name}}</td>
+						    		<td>{{x.Current}}</td>
+						    		<td ng-show="showBaseline">{{x.Baseline}}</td>
+						    	</tr>
+						    </tbody>
+						  </table>
+					  </div>
+				</div>
+			</div>
+			<div class="resultsView" id="summaryResults">
+				<h4>Summary Results</h4>
+				<div class="row" id="pieChartRow">
+					<div id="currentScenarioPieChart" class="col-md-12">
+						<h5>Current Scenario</h5>
+						<h6>Annual Rainfall: <span id="currentRainfall"></span> in.</h6>
+						<canvas height="100%" id="summaryResultsChart1" class="chart chart-pie" chart-data="summary1Data" chart-labels="summary1Labels" chart-colors="summary1Colors" chart-options="summary1Options"></canvas>
+						<img class="chartImages" id="summaryResultsChart1Image" />
+					</div>
+					<div id="baselineScenarioPieChart" class="col-md-6" ng-show="showBaseline">
+						<h5>Baseline Scenario</h5>
+						<h6>Annual Rainfall: <span id="baselineRainfall"></span> in.</h6>
+						<canvas height="100%" id="summaryResultsChart2" class="chart chart-pie" chart-data="summary2Data" chart-labels="summary2Labels" chart-options="summary2Options" chart-colors="summary2Colors"></canvas>
+						<img class="chartImages" id="summaryResultsChart2Image" />
+					</div>
+				</div>
+				<div class="row">
+					<table id="summaryResultsTable" class="table table-striped">
+					    <thead>
+					      <tr>
+					        <th>Statistic</th>
+					        <th>Current Scenario</th>
+					        <th ng-show="showBaseline">Baseline Scenario</th>
+					      </tr>
+					    </thead>
+					    <tbody class="text-left">
+					    	<tr ng-repeat="x in summaryResults">
+					    		<td>{{x.Name}}</td>
+					    		<td>{{x.Current}}</td>
+					    		<td ng-show="showBaseline">{{x.Baseline}}</td>
+					    	</tr>
+					    </tbody>
+					  </table>
+				</div>
+			</div>
+			<div class="resultsView" id="rainfallRunoffEvents">
+				<h4>Rainfall / Runoff Events</h4>
+				<canvas id="rainfallRunoffEventsChart" class="chart chart-line" chart-data="rainfallRunoffEventsData" chart-series="rainfallRunoffEventsSeries" chart-options="rainfallRunoffEventsOptions" chart-colors="rainfallRunoffEventsColors"></canvas>
+				<img class="chartImages" id="rainfallRunoffEventsChartImage" />
+			</div>
+			<div class="resultsView" id="rainfallRunoffFrequency">
+				<h4>Rainfall / Runoff Exceedance Frequency</h4>
+				<canvas id="rainfallRunoffFrequencyChart" class="chart chart-line" chart-data="rainfallRunoffFrequencyData" chart-series="rainfallRunoffFrequencySeries" chart-options="rainfallRunoffFrequencyOptions" chart-colors="rainfallRunoffFrequencyColors"></canvas>
+				<img class="chartImages" id="rainfallRunoffFrequencyChartImage" />
+			</div>
+			<div class="resultsView" id="rainfallRetention">
+				<h4>Rainfall Retention Frequency</h4>
+				<canvas id="rainfallRetentionChart" class="chart chart-line" chart-data="rainfallRetentionData" chart-series="rainfallRetentionSeries" chart-options="rainfallRetentionOptions" chart-colors="rainfallRetentionColors"></canvas>
+				<img class="chartImages" id="rainfallRetentionChartImage" />
+			</div>
+			<div class="resultsView" id="runoffContribution">
+				<h4>Runoff Contribution by Rainfall Percentile</h4>
+				<canvas id="runoffContributionChart" class="chart chart-bar" chart-data="runoffContributionData" chart-series="runoffContributionSeries" chart-labels="runoffContributionLabels" chart-options="runoffContributionOptions" chart-colors="runoffContributionColors"></canvas>
+				<img class="chartImages" id="runoffContributionChartImage" />
+			</div>
+			<div class="resultsView" id="extremeEvent">
+				<h4>Extreme Event Rainfall / Runoff</h4>
+				<h5>Extreme Event Rainfall / Runoff Depth</h5>
+				<canvas id="extremeEventDepthChart" class="chart chart-bar" chart-data="extremeEventDepthData" chart-series="extremeEventSeries" chart-labels="extremeEventLabels" chart-options="extremeEvent1Options" chart-colors="extremeEventColors"></canvas>
+				<img class="chartImages" id="extremeEventDepthChartImage" />
+				<h5>Extreme Event Peak Rainfall / Runoff</h5>
+				<canvas id="extremeEventPeakChart" class="chart chart-bar" chart-data="extremeEventPeakData" chart-series="extremeEventSeries" chart-labels="extremeEventLabels" chart-options="extremeEvent2Options" chart-colors="extremeEventColors"></canvas>
+				<img class="chartImages" id="extremeEventPeakChartImage" />
+			</div>
+			<div class="resultsView" id="costSummary">
+				<h4>Cost Summary</h4>
+				<h5 id="costsSummaryHeader">Estimate of Probable Capital Costs (estimates in 2017 US.$)</h5>
+				<span id="typeOfCostsLink" class="link maintenanceCosts" ng-click="changeCostCriteria()">Maintenance Costs</span> | <span id="costsViewLink" class="link graphical" ng-click="changeCostView()">Graphical View</span>
+				<div id="costsTable">
+					<table id="costSummaryTable" class="table table-striped">
+						<thead>
+					      <tr>
+					        <th></th>
+					        <th>Drainage Area %</th>
+					        <th>Has Pre-Treatment?</th>
+					        <th colspan="2">Current Scenario (C)</th>
+					        <th colspan="2">Baseline Scenario (B)</th>
+					        <th colspan="2">Difference (C - B)</th>
+					      </tr>
+					    </thead>
+					    <thead>
+					      <tr>
+					        <th>Cost By LID Control Type</th>
+					        <th>Current / Baseline</th>
+					        <th>Current / Baseline</th>
+					        <th>Low</th>
+					        <th>High</th>
+					        <th>Low</th>
+					        <th>High</th>
+					        <th>Low</th>
+					        <th>High</th>
+					      </tr>
+					    </thead>
+					    <tbody class="text-left">
+						    <tr ng-repeat="x in costSummaryTableData">
+						    	<td>{{x.name}}</td>
+						    	<td>{{x.drainageArea}}</td>
+						    	<td>{{x.preTreatment}}</td>
+						    	<td>{{x.currentLow}}</td>
+						    	<td>{{x.currentHigh}}</td>
+						    	<td>{{x.baselineLow}}</td>
+						    	<td>{{x.baselineHigh}}</td>
+						    	<td>{{x.differenceLow}}</td>
+						    	<td>{{x.differenceHigh}}</td>
+						    </tr>
+					    </tbody>
+					</table>
+				</div>
+				<div id="costsGraph">
+					<canvas id="costsChart" class="chart chart-bar" chart-data="costsData" chart-series="costsSeries" chart-labels="costsLabels" chart-options="costsOptions" chart-colors="costsColors"></canvas>
+					<img class="chartImages" id="costsChartCapitalImage" />
+					<img class="chartImages" id="costsChartMaintenanceImage" />
+				</div>
+				<div class="text-left">
+					<div class="col-md-12">
+						<strong>Note:</strong> site complexity variables that affect cost shown below:</span>
+					</div>
+					<div class="col-md-6">
+						<table class="table table-striped">
+							<thead>
+						      <tr>
+						        <th></th>
+						        <th>Current Scenario</th>
+						        <th>Baseline Scenario</th>
+						      </tr>
+						    </thead>
+						    <tbody class="text-left">
+						    	<tr ng-repeat="x in costSummaryTableInfoData">
+						    		<td>{{x.name}}</td>
+						    		<td>{{x.currentScenario}}</td>
+						    		<td>{{x.baselineScenario}}</td>
+						    	</tr>
+						    </tbody>
+						</table>
+					</div>
+					<div class="col-md-6">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th colspan="2" class="text-center">Chart Key</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>D - Disconnection</td>
+									<td>IB - Infiltration Basins</td>
+								</tr>
+								<tr>
+									<td>RH - Rain Harvesting</td>
+									<td>PP - Permeable Pavement</td>
+								</tr>
+								<tr>
+									<td>RG - Rain Gardens</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>GR - Green Roofs</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>SP - Street Planters</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>

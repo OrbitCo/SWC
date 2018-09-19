@@ -1,0 +1,93 @@
+<div class="row">
+ <div class="col-md-12">
+    <h3>Precipitation/Evaporation</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading" ng-controller="modalCtrl">
+          <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse1" ng-click="openCloseDirections();"><h4 class="panel-title">Directions<i class="fa fa-chevron-right directionsIcon" aria-hidden="true"></i></h4></a>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+          <div class="panel-body"><p>Select a rain gage location to use as a source of hourly rainfall data and a weather station to use as a source for evaporation rates.</p>
+            <p>Select the checkbox if you would like the calculator to use the same location for both.</p>
+            <p>The period of record and average annual rainfall and average potential daily rate are listed below.</p>
+            <p>Use the "Download rainfall/evaporation data" option only if you need to use the data in some other application.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="rainGageSelect">Rain Gage: <img src="stormwatercalculator/images/rainGageIcon.png" alt="rain gage" height="30px" width="30px" /></label>
+      <select class="form-control" id="rainGageSelect" ng-model="rainGageSelect" data-ng-options="items.value as items.name for items in rainGageNames" ng-change="selectRainGageDropdown()">
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="weatherStationSelect">Weather Station: <img src="stormwatercalculator/images/weatherStationIcon.png" alt="weather station" height="30px" width="30px" /></label>
+      <select class="form-control" id="weatherStationSelect" ng-model="weatherStationSelect" ng-options="items.value as items.name for items in weatherStationNames" ng-change="selectWeatherStationDropdown()">
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="precipitationInformation">Rainfall and Evaporation Information:</label>
+      <div id="precipitationInformation">
+        <p id="rainGageInformation">
+          <img src="stormwatercalculator/images/rainGageIcon.png" alt="rain gage" height="30px" width="30px" />
+          <br>
+          <span>Record Start Date: </span>
+          <span ng-bind="rainStartDate">
+          </span>
+          <br>
+          <span>Record End Date: </span>
+          <span ng-bind="rainEndDate">
+          </span>
+          <br>
+          <span>Annual Rainfall: </span>
+          <span ng-bind="rainRainfall">
+          </span>
+        </p>
+        <p id="weatherStationInformation">
+          <img src="stormwatercalculator/images/weatherStationIcon.png" alt="weather station" height="30px" width="30px" />
+          <br>
+          <span>Record Start Date: </span>
+          <span ng-bind="weatherStartDate">
+          </span>
+          <br>
+          <span>Record End Date: </span>
+          <span ng-bind="weatherEndDate">
+          </span>
+          <br>
+          <span>Evapotranspiration Rate: </span>
+          <span ng-bind="weatherRate">
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <i class="fa fa-download" aria-hidden="true"></i>&nbsp;<span class="link" ng-click="downloadPrecipitationData()">Download rainfall/evaporation data</span>
+    <a id="precipitationDownload1">Test</a>
+    <a id="precipitationDownload2">Test</a>
+  </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+      <span class="helpLink" ng-click="help()">Help</span>
+    </div>
+</div>

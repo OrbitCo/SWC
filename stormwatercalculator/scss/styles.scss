@@ -1,0 +1,1298 @@
+    $primaryGreen: #199493;
+    $secondaryGreen: #7cb2ab;
+    $primaryGrey: #efefef;
+    $orange: #ffb74d;
+
+    @media only screen and (min-width: 0px) and (max-width: 768px)
+    {
+        #climateChangeModal
+        {   
+            
+        }
+    }
+    @media only screen and (max-width: 1024px) {
+        .site-wrap
+        {
+            position: fixed;
+            top: 150px;
+        }
+        #navigationBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            display: none;
+        }
+        #modal {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 300px;
+            height: auto;
+            background-color: $secondaryGreen;
+            padding: 10px;
+            padding-top: 0;
+            color: #fff;
+            z-index: 2;
+            font-size: 12px;
+            cursor: move;
+        }
+    }
+
+    @media only screen and (min-width: 1025px) {
+    .lidSliderGroup
+    {
+        width: 80px;
+    }
+        #navigationBar {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 75px;
+            height: 100%;
+        }
+        #modal legend {
+            color: #fff;
+        }
+        .homePageRows {
+            margin-top: 15%;
+        }
+        #bingMap
+        {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            width: calc(100% - 115px);
+            height: calc(100% - 50px);
+        }
+    }
+
+#bingMap
+{
+    display: none;
+}
+
+    button:focus {
+        outline: 0;
+    }
+
+    #homePage {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: default;
+        background: url(../images/background.jpg);
+        background-repeat: no-repeat;
+        background-attacement: fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        overflow: auto;
+        color: #fff;
+
+        button {
+            width: 125px;
+            height: 50px;
+            border: 0;
+            border-radius: 25px;
+            background-color: $secondaryGreen;
+        }
+        &:hover {
+            background-color: $primaryGreen;
+        }
+    } 
+    // #homePage {
+    //     position: fixed;
+    //     top: 50px;
+    //     left: 0;
+    //     width: 100%;
+    //     height: calc(100% - 50px);
+    //     cursor: default;
+    //     overflow-y: auto;
+    //     background: url(../stormwatercalculator/images/background.jpg) no-repeat center center fixed;
+    //     -webkit-background-size: cover;
+    //     -moz-background-size: cover;
+    //     -o-background-size: cover;
+    //     background-size: cover;
+    // }
+    body {
+        /* Without this, the body has excess horizontal scroll when the menu is open */
+        overflow-x: hidden;
+    }
+
+
+    .homePageRows {
+        margin-top: 150px;
+    }
+
+    .navbar {
+        background-color: $primaryGreen;
+        color: #ffffff;
+        border-color: $primaryGreen;
+        a,
+        span {
+            color: #fff !important;
+            cursor: pointer !important;
+        }
+        img {
+            height: 30px;
+            width: 94px;
+            margin-top: -5px;
+        }
+    }
+
+    .navbar li {
+        cursor: pointer;
+    } // .navbar img {
+    //     float: left;
+    //     margin-top: 7px;
+    // }
+    input[type="text"],
+    input[type="number"],
+    select {
+        border: 0 !important;
+        border: 1px solid #ccc !important; // height: 50px !important;
+    }
+
+    #loadApplicationDiv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        z-index: 1031;
+    }
+
+    #loadingDiv,
+    #alertDiv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 3;
+        display: none;
+    }
+
+    #alertModal {
+        position: absolute;
+        top: 50%;
+    }
+
+    #loadApplicationModal,
+    #loadSoilDataModal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: $primaryGrey;
+        height: 200px;
+        width: 300px;
+        border-radius: 5px;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    #navigationBar {
+        background-color: $primaryGrey;
+        display: none;
+    }
+
+    #loadingDiv,
+    #alertDiv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 3;
+        display: none;
+    }
+
+    #alertDiv {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    #alertModal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #navigationBar {
+        background-color: $primaryGrey;
+        display: none;
+    }
+
+    #navigationTable {
+        width: 100%;
+        margin-top: 25px;
+    }
+
+    #navigationTable td {
+        height: 65px;
+    }
+
+    .navigationIcon.active {
+        fill: $primaryGreen !important;
+    } // .navigationLink {
+    //     height: 90%;
+    //     width: 90%;
+    //     margin-left: 3.5px;
+    //     cursor: pointer;
+    // }
+    // .navigationIcon {
+    //     position: absolute;
+    //     left: 13px;
+    //     margin-top: 5px;
+    //     fill: #000000;
+    // }
+    // .navigationIcon.active {
+    //     fill: $primaryGreen;
+    // }
+    .navigationName {
+        position: absolute;
+        top: 50px;
+        left: 75px;
+    }
+
+    #navigationExpand {
+        position: fixed;
+        left: 70px;
+        top: 350px;
+        color: $primaryGreen;
+        font-size: 24px;
+    }
+
+    .btn {
+        color: #ffffff;
+        background-color: $secondaryGreen;
+    }
+
+    .btn:hover {
+        color: #ffffff;
+        background-color: $primaryGreen;
+    }
+
+    .panel-group {
+        color: #000;
+    }
+
+    .panel-heading {
+        cursor: pointer;
+    }
+
+    .panel-heading a
+    {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .panel-body {
+        height: 100px;
+        overflow-y: auto;
+    }
+
+    #climateChangeModal,
+    #resultsModal {
+        color: #000;
+    }
+
+    #climateChangeModal .panel-body,
+    #resultsModal .panel-body {
+        height: auto;
+    }
+
+    #climateChangeModal legend {
+        color: #000 !important;
+    }
+
+    #resultsModal h5 {
+        color: $primaryGreen;
+    }
+
+    #resultsModal input[type="number"] {
+        border: 1px solid $primaryGreen !important;
+    }
+
+    .directionsIcon,
+    .directionsIcon2
+    {
+        float: right;
+        color: $primaryGreen;
+    }
+
+    .customAreaRow {
+        height: 35px;
+        overflow: hidden;
+    }
+
+    .sliderLink {
+        color: #ffffff;
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .sliderLink:hover {
+        color: #ffffff;
+    }
+
+    .sliderGroup {
+        margin-top: -5px;
+    }
+
+    .sliderGroup input[type="number"] {
+        height: 35px !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .slider-handle {
+        cursor: pointer;
+        background-color: $orange;
+        background-image: linear-gradient(to bottom, $orange 0, $orange 100%);
+    }
+
+    #forestSlider,
+    #meadowSlider,
+    #lawnSlider,
+    #desertSlider,
+    #disconnectionSlider,
+    #disconnectionCaptureSlider,
+    #rainHarvestingSlider,
+    #rainHarvestingCisternSlider,
+    #rainHarvestingRateSlider,
+    #rainHarvestingFeetSlider,
+    #rainGardensSlider,
+    #rainGardensPondingSlider,
+    #rainGardensThicknessSlider,
+    #rainGardensMediaSlider,
+    #rainGardensCaptureSlider,
+    #greenRoofsSlider,
+    #greenRoofsThicknessSlider,
+    #greenRoofsMediaSlider,
+    #streetPlantersSlider,
+    #streetPlantersPondingSlider,
+    #streetPlantersThicknessSlider,
+    #streetPlantersMediaSlider,
+    #streetPlantersGravelSlider,
+    #streetPlantersCaptureSlider,
+    #infiltrationBasinsSlider,
+    #infiltrationBasinsBasinSlider,
+    #infiltrationBasinsCaptureSlider,
+    #permeablePavementSlider,
+    #permeablePavementPavementSlider,
+    #permeablePavementGravelSlider,
+    #permeablePavementCaptureSlider {
+        width: 100%;
+    }
+
+    .sliderValue::-webkit-inner-spin-button,
+    .sliderValue::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .lidRow {
+        margin-top: 10px;
+    }
+
+    .fa-search {
+        float: left;
+        font-size: 18px;
+        position: relative;
+        z-index: 2;
+        color: $secondaryGreen;
+    }
+    #locateButton
+    {
+    float: right;
+    font-size: 18px;
+    position: relative;
+    z-index: 2;
+    color: $secondaryGreen;
+    cursor: pointer;
+    }
+
+    #locationInput {
+        padding-left: 40px;
+    }
+
+    #resultsModal button {
+        width: 125px;
+        height: 50px;
+        border: 0;
+        background-color: $secondaryGreen;
+        color: #fff;
+        border-radius: 25px;
+    }
+
+    #resultsModal button:hover {
+        background-color: $primaryGreen;
+    }
+
+    .colorBox {
+        width: 10px;
+        height: 25px;
+        background-color: red;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .radioGroup {
+        margin-top: -30px;
+    }
+
+    #soilType .radio,
+    #topography .radio {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    #soilDrainage span {
+        margin-left: 10px;
+    }
+
+    #yellowBox {
+        background-color: #FFEB3B;
+    }
+
+    #pinkBox {
+        background-color: #FF80AB;
+    }
+
+    #purpleBox {
+        background-color: #7E57C2;
+    }
+
+    #blueBox {
+        background-color: #01579B;
+    }
+
+    #precipitationInformation {
+        height: 100px;
+        width: 100%;
+        background-color: #fff;
+        color: #000;
+        border-radius: 5px;
+        padding-left: 10px;
+        overflow-y: auto;
+    }
+
+    .helpLink {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .baselineScenario
+    {
+        opacity: 0;
+    }
+
+    #siteDescription,
+    #rainfallRunoffEvents,
+    #rainfallRunoffFrequency,
+    #rainfallRetention,
+    #runoffContribution,
+    #extremeEvent,
+    #costSummary {
+        display: none;
+    }
+
+    #resultsModal button:disabled {
+        background-color: $primaryGrey;
+    }
+
+    .fa-file-pdf-o {
+        color: red;
+        font-size: 24px;
+    }
+
+    .fa-link {
+        color: grey;
+        font-size: 24px;
+    }
+
+    .fa-file-video-o {
+        font-size: 24px;
+    }
+
+    #projectCostModal a
+    {
+        color: #fff;
+        font-weight: bold;
+    }
+
+    #resultsCharts h5 {
+        color: #000;
+    }
+
+    .navigation {
+        /* critical sizing and position styles */
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 50px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 0;
+        padding-left: 0;
+        /* non-critical appearance styles */
+        list-style: none;
+        background: #EFEFEF;
+    }
+    /* Navigation Menu - List items */
+
+    .nav-item {
+        /* non-critical appearance styles */
+        width: 250px;
+        margin-top: 5px;
+        overflow: hidden;
+    }
+
+    .nav-item a {
+        color: #000;
+        display: block;
+        padding: .5em 1em;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 0.2s, background 0.5s;
+    }
+
+    .nav-item a:hover,
+    .nav-item a:hover .icons {
+        color: $primaryGreen !important;
+        fill: $primaryGreen;
+    }
+
+    .nav-item a.active,
+    .nav-item a.active .icons {
+        color: $primaryGreen !important;
+        fill: $primaryGreen;
+    }
+    /* Site Wrapper - Everything that isn't navigation */
+
+    .site-wrap
+    {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        height: calc(100% - 50px);
+        width: 100%;
+        background-color: #fff;
+        z-index: 1;
+    }
+    /* Nav Trigger */
+
+    .nav-trigger {
+        /* critical styles - hide the checkbox input */
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+    }
+
+    label[for="nav-trigger"] {
+        /* critical positioning styles */
+        position: fixed;
+        left: 50px;
+        top: 100px;
+        z-index: 2;
+        /* non-critical apperance styles */
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+    }
+    /* Make the Magic Happen */
+
+    label[for="nav-trigger"] {
+        color: #fff;
+        position: absolute;
+        left: 48px;
+        top: 335px;
+        font-size: 25px;
+        width: 26px;
+        height: 26px;
+        cursor: pointer;
+        z-index: 2;
+        background: #2E8584;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.2s;
+
+        .fa {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 4%;
+            left: 8%;
+            /*margin: -12px 0 0 -12px;*/
+        }
+
+        .fa-chevron-circle-right:after {
+            content: "\f137";
+            display: none;
+        }
+    }
+
+    .icons {
+        display: inline-block;
+        margin-right: 20px;
+        vertical-align: middle;
+        fill: #666;
+        width: 35px;
+        height: 35px;
+        float: left;
+        margin-top: 10px;
+    } // @media only screen and (max-width: 1024px) {}
+    #navigationBar {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 75px;
+        height: 100%;
+    }
+
+    #modal {
+        position: absolute;
+        top: 25px;
+        left: 150px;
+        width: 300px;
+        height: auto;
+        background-color: $secondaryGreen;
+        padding: 10px;
+        padding-top: 0;
+        color: #fff;
+        z-index: 5;
+        font-size: 12px;
+        cursor: move;
+        overflow: hidden;
+
+        legend {
+            color: #fff;
+        } // label {
+        //     padding-left: 0; 
+        // }
+    }
+
+     @media screen and (min-width: 992px)
+     {
+        .navcontainer:before
+        {
+        display: none;
+        }
+        .navcontainer:after
+        {
+        display: none;
+        }
+    }
+
+    @media screen and (min-width: 0px) and (max-width: 1024px) {
+
+    #resultsModal button
+    {
+        margin-top: 10px;
+    }
+        #customAreaIcon {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 3;
+        cursor: pointer;
+    }
+    .chartPDFs
+    {
+        display: none !important;
+    }
+        #youtubeVideo
+        {
+        margin-top: 10px;
+        }
+        .fa-search
+        {
+            margin-left: 10px;
+            margin-top: -26px;
+        }
+        #locateButton
+        {
+            margin-right: 10px;
+            margin-top: -26px;
+        }
+
+        #navigationBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            display: none;
+        }
+        .navcontainer
+        {
+            display: block;
+        }
+
+        #bingMap {
+            position: relative !important; // top: 25px;
+            height: calc(100% - 50px);
+            width: auto;
+            z-index: 1;
+        }
+
+        .helpLink {
+            color: #000000;
+        }
+
+        #menuCircle {
+            display: none;
+        }
+        #climateDirectionBody {
+            height: 100px;
+            overflow-y: auto;
+        }
+        body,
+        html {
+            overflow-x: hidden;
+        }
+        #landArea a {
+            color: #000000;
+        }
+        .form-control:focus {
+            border-color: $primaryGreen;
+            outline: none;
+            -webkit-box-shadow: none !important;
+            -moz-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+        #rainGageSelect,
+        #weatherStationSelect {
+            border-color: $primaryGreen;
+        }
+        #unlockLockSVG,
+        #downloadSVG {
+            color: #000000;
+        }
+        .navigation {
+            width: 100%;
+            height: 125px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            display: block;
+            z-index: 2;
+            position: fixed;
+            padding: 10px 25px;
+            top: 50px;
+            background: #fff;
+            text-align: center;
+        }
+        .navcontainer {
+            position: fixed;
+            height: 125px;
+            top: 50px;
+            z-index: 6;
+        }
+        .navcontainer:before {
+            font-family: 'FontAwesome';
+            content: "\f053";
+            color: #7CB2AB;
+            font-size: 20px;
+            position: absolute;
+            z-index: 5;
+            background: #fff;
+            height: 100px;
+            padding: 40px 10px;
+            cursor: pointer;
+            /*right: 925px;*/
+        }
+        .navcontainer:after {
+            font-family: 'FontAwesome';
+            content: "\f054";
+            color: #7CB2AB;
+            font-size: 20px;
+            position: absolute;
+            right: -15px;
+            z-index: 5;
+            background: #fff;
+            height: 100px;
+            padding: 40px 10px;
+            cursor: pointer;
+            /*right: 30px;*/
+        }
+        .nav-item {
+            width: 10px;
+            display: inline;
+        }
+        .nav-item a {
+            display: inline-block;
+            font-size: 12px;
+        }
+        .nav-item {
+            .icons {
+                float: none;
+                display: block;
+                margin: 0 auto 10px auto;
+            }
+        }
+        #mobileBR {
+            display: initial;
+        }
+
+        .navbar-default {
+            .navbar-brand {
+                span {
+                    margin: 0;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        #mainArea {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 40px;
+            left: 0;
+        }
+        #mobileMapContent {
+            position: relative;
+            top: 0;
+            left: 0;
+            height: 100%;
+            overflow-y: auto;
+            z-index: 2;
+        }
+        #modal {
+            height: auto;
+            z-index: 1;
+        }
+        #modal #costRegionSelect {
+            width: 100%;
+            background-position: 99% 50%;
+        }
+        legend,
+        #modal label {
+            color: #333 !important;
+        }
+        #modal label a {
+            color: #000000 !important;
+            text-decoration: none;
+        }
+        #mapArea {
+            height: 450px;
+        }
+        #summaryResultsChartAreaLeft {
+            width: 100%;
+        }
+        #summaryResultsChartAreaRight {
+            width: 0px;
+            height: 0px;
+        }
+        #addressBox,
+        #locationInput,
+        #acreInput,
+        #rainGageSelect,
+        #weatherStationSelect,
+        #precipitationInformation,
+        #soilDrainageBox {
+            // height: 40px !important;
+            // border-radius: 5px;
+            border: solid 1px $primaryGreen !important; // background-image: url(../stormwatercalculator/images/magnifyingGlass.png);
+            // background-repeat: no-repeat;
+            // padding-left: 30px;
+            // background-position: 10px 13px;
+        }
+        #acreBox,
+        #yearsAnalyzeBox,
+        #eventThresholdBox,
+        #siteLocationBox {
+            height: 40px;
+            padding-left: 5px;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: $primaryGreen;
+            background-image: none;
+        }
+        .polygon {
+            stroke: #000000;
+            border: 1px solid;
+        }
+        #polygonDrawingTool {
+            stroke: #000000;
+            border-color: #000000;
+        }
+        .gageborders {
+            border: 2px solid;
+            float: left;
+            width: 20px;
+            height: 34px;
+            margin-left: -25px;
+            margin-top: 50px;
+            border-style: solid none none solid;
+            border-color: #000000;
+        }
+        #gageBorderTop {
+            position: static;
+            top: 410px;
+            left: 45px;
+        }
+        #gageBorderBottom {
+            position: static;
+            top: 535px;
+            left: 45px;
+        }
+        .navbar-default .navbar-brand span {
+            margin: 0;
+            font-size: 12px;
+        }
+        #precipitationDownloadLink {
+            color: #000000;
+        }
+        #locationDirections {
+            display: none;
+        }
+
+        #climateDirectionsHeader,
+        #helpfulResourcesHeader,
+        #resultsDirectionsHeader {
+            border-color: #7cb2ab;
+            border-bottom-width: 1px;
+            border-top-width: 0px;
+            border-left-width: 0px;
+            border-right-width: 0px;
+            border-style: solid;
+            width: calc(100% - 40px);
+            background-color: #e5e5e5;
+            padding: 10px;
+            height: 5px;
+            color: #000000;
+            margin-left: 10px;
+        }
+        #climateDirectionsBody,
+        #helpfulResourcesBody,
+        #resultsDirectionsBody {
+            background-color: #e5e5e5;
+            padding: 10px;
+            color: #000000;
+            display: block;
+            margin-left: 10px;
+            overflow-y: auto;
+            width: calc(100% - 40px);
+            height: 100px;
+        }
+        #progressBarArea {
+            height: 150px;
+            width: 100%;
+            top: 50px;
+            position: fixed;
+            overflow: none;
+            background-color: #ffffff;
+        }
+        #soilDrainageBox {
+            height: 40px;
+            padding-left: 10px;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: $primaryGreen;
+            background-image: none;
+        }
+        #costRegionSelect,
+        #regionalMultiplierValue {
+            height: 34px;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: $primaryGreen !important;
+            background-image: none;
+        }
+        #rainfallInformation {
+            width: 100%;
+            height: auto;
+            background-color: #ffffff;
+            border-width: 1px;
+            border-color: $primaryGreen;
+            border-radius: 5px;
+            border-style: solid;
+            padding: 5px;
+            color: #000000;
+        }
+        #forestLink {
+            padding-right: 10px;
+        }
+        #lawnLink {
+            padding-right: 17px;
+        }
+        #desertLink {
+            padding-right: 8px;
+        } // #forestSlider,
+        // #meadowSlider,
+        // #lawnSlider,
+        // #desertSlider {
+        //     width: calc(100% - 129px);
+        // }
+        #disconnectionLink {
+            padding-right: 41px;
+        }
+        #rainHarvestingLink {
+            padding-right: 31px;
+        }
+        #rainGardensLink {
+            padding-right: 45px;
+        }
+        #greenRoofsLink {
+            padding-right: 51px;
+        }
+        #streetPlantersLink {
+            padding-right: 37px;
+        }
+        #infiltrationBasinsLink {
+            padding-right: 23px;
+        } // #disconnectionSlider,
+        // #rainHarvestingSlider,
+        // #rainGardensSlider,
+        // #greenRoofsSlider,
+        // #streetPlantersSlider,
+        // #infiltrationBasinsSlider,
+        // #permeablePavementSlider {
+        //     width: calc(100% - 205px);
+        // }
+        #forestBox,
+        #meadowBox,
+        #lawnBox,
+        #desertBox,
+        #imperviousBox,
+        #disconnectionBox,
+        #rainHarvestingBox,
+        #rainGardensBox,
+        #greenRoofsBox,
+        #streetPlantersBox,
+        #infiltrationBasinsBox,
+        #permeablePavementBox {
+            position: fixed;
+            left: 20%;
+            right: 20%;
+            bottom: 35%;
+            top: 35%;
+            background-color: white;
+            border: solid 2px gray;
+            color: #000000;
+            z-index: 20;
+            display: none;
+        }
+        #restoreDefaultsButton,
+        #resultsButton,
+        #useBaselineButton,
+        #removeBaselineButton,
+        #printPDFButton,
+        #printPDFButton2 {
+            color: #ffffff;
+            background-color: $primaryGreen;
+        }
+        .sliderLink {
+            color: #199493;
+        }
+
+        .homePageRows {
+            margin-top: 50px;
+        }
+    }
+
+    @media screen and (min-width: 1025px) and (max-width: 1439px) {
+        display: block;
+        .menuIcon {
+            width: 30px;
+            height: 30px;
+        }
+    }
+    @media screen and (min-width: 1025px)
+    {
+        .chartPDFs
+        {
+            margin-top: -5000px;
+        }
+        #lidControlsModal .control-label
+        {
+        font-size: 11px;
+        }
+        #customAreaIcon {
+        fill: $secondaryGreen;
+        stroke: #fff;
+        stroke-width: 3;
+        cursor: pointer;
+    }
+        .control-label,
+        .slider.slider-horizontal
+        {
+            margin-top: 8px;
+        }
+        .fa-search
+        {
+            margin-left: 10px;
+            margin-top: -33px;
+        }
+        #locateButton
+        {
+            margin-right: 10px;
+            margin-top: -33px;
+        }
+        input[type="text"],
+input[type="number"],
+select
+{
+    border: 0 !important;
+    height: 50px !important;
+}
+.control-label
+{
+    margin-left: -10px;
+}
+#getStartedButton:hover
+{
+background-color: $primaryGreen;
+    }
+}
+
+.saveSiteButton
+{
+    height: 50px;
+    width: 100%;
+}
+.saveSiteButton:hover
+{
+    background-color: $primaryGreen;
+}
+#nameYourSite
+{
+    display: none;
+}
+#saveSiteModalBody
+{
+    height: 80px;
+}
+#saveSiteModal input[type="text"]
+{
+    border: 1px solid $primaryGreen !important;
+}
+.loadingDivs
+{
+    margin-top: 70%;
+    background-color: $primaryGrey;
+}
+.navBarLink
+{
+    color: blue !important;
+}
+.navbar-default .navbar-toggle 
+{
+    border: 0;
+}
+#uploadFile
+{
+    display: none;
+}
+.navbar a.disabled
+{
+    color: #a2a2a2 !important;
+}
+.navbar-default .navbar-toggle .icon-bar 
+{
+    background-color: #fff;
+}
+#iconBar:hover
+{
+    background-color: $primaryGreen;
+}
+#soilDrainage .helpLink
+{
+    padding-left: 5px !important;
+}
+.modal-header
+{
+    background-color: $primaryGreen;
+    color: #fff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.modal-header button
+{
+    color: #fff;
+    opacity: 1;
+}
+.designStormButton
+{
+    float: left;
+}
+.link
+{
+    cursor: pointer;
+    text-decoration: underline;
+}
+#resultsModal .link
+{
+    text-decoration: underline;
+}
+#sendDataButton
+{
+    width: 100%;
+    height: 50px;
+}
+.chartImages
+{
+    display: none;
+}
+#climateChangeModal button {
+        width: 125px;
+        height: 50px;
+        border: 0;
+        background-color: $secondaryGreen;
+        color: #fff;
+        border-radius: 25px;
+    }
+
+    #climateChangeModal button:hover {
+        background-color: $primaryGreen;
+    }
+.chartPDFs
+{
+    visibility: hidden;
+}
+#landCoverModal .helpLink,
+#lidControlsModal .helpLink
+{
+    margin-left: 15px;
+}
+#precipitationDownload1,
+#precipitationDownload2
+{
+    display: none;
+}
+#costsGraph
+{
+    display: none;
+}
+.MicrosoftMapDrawing, .MapPushpinBase
+{
+    pointer-events: auto !important;
+}
+.designStormButton:disabled:hover
+{
+    background-color: $secondaryGreen;
+}
+#costSummaryTable tr:last-child
+{
+    font-weight: bold;
+}
+#costsTable
+{
+    overflow-x: auto;
+}

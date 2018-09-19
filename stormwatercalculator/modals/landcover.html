@@ -1,0 +1,87 @@
+<div id="landCoverModal">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Land Cover</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading" ng-controller="modalCtrl">
+                        <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse1" ng-click="openCloseDirections();"><h4 class="panel-title">Directions<i class="fa fa-chevron-right directionsIcon" aria-hidden="true"></i></h4></a>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <p>Describe the site's land cover for the development scenario being analyzed.</p>
+                            <p>Click on a category to see a more detailed description.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-3 col-md-3 control-label">
+            <a data-toggle="modal" data-target="#forestModal" class="sliderLink">Forest:</a>
+        </label>
+        <div class="col-xs-9 col-sm-7 col-md-5">
+            <input class="landSlider" data-slider-id='forestSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide" />
+        </div>
+        <div class="input-group input-group-sm sliderGroup col-xs-3 col-sm-2 col-md-4">
+            <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="0" id="forestValue" ng-change="changeLandSlider(forestValue, 'forest')" ng-model="forestValue">
+            <span class="input-group-addon" id="sizing-addon2">%</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-3 col-md-3 control-label">
+            <a data-toggle="modal" data-target="#meadowModal" class="sliderLink">Meadow:</a>
+        </label>
+        <div class="col-xs-9 col-sm-7 col-md-5">
+            <input class="landSlider" data-slider-id='meadowSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide" />
+        </div>
+        <div class="input-group input-group-sm sliderGroup col-xs-3 col-sm-2 col-md-4">
+            <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="0" id="meadowValue" ng-change="changeLandSlider(meadowValue, 'meadow')" ng-model="meadowValue">
+            <span class="input-group-addon" id="sizing-addon2">%</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-3 col-md-3 control-label">
+            <a data-toggle="modal" data-target="#lawnModal" class="sliderLink">Lawn:</a>
+        </label>
+        <div class="col-xs-9 col-sm-7 col-md-5">
+            <input class="landSlider" data-slider-id='lawnSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide" />
+        </div>
+        <div class="input-group input-group-sm sliderGroup col-xs-3 col-sm-2 col-md-4">
+            <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="0" id="lawnValue" ng-change="changeLandSlider(lawnValue, 'lawn')" ng-model="lawnValue">
+            <span class="input-group-addon" id="sizing-addon2">%</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-3 col-md-3 control-label">
+            <a data-toggle="modal" data-target="#desertModal" class="sliderLink">Desert:</a>
+        </label>
+        <div class="col-xs-9 col-sm-7 col-md-5">
+            <input class="landSlider" data-slider-id='desertSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide" />
+        </div>
+        <div class="input-group input-group-sm sliderGroup col-xs-3 col-sm-2 col-md-4">
+            <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="0" id="desertValue" ng-change="changeLandSlider(desertValue, 'desert')" ng-model="desertValue">
+            <span class="input-group-addon" id="sizing-addon2">%</span>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-3 col-md-3 control-label lidLink">
+            <a data-toggle="modal" data-target="#imperviousModal" class="sliderLink">Impervious:</a>
+        </label>
+        <div class="col-xs-9 col-sm-7 col-md-5">
+        </div>
+        <div class="input-group input-group-sm sliderGroup col-xs-3 col-sm-2 col-md-4">
+            <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="100" id="imperviousValue" ng-model="imperviousValue" disabled>
+            <span class="input-group-addon" id="sizing-addon2">%</span>
+        </div>
+    </div>
+      <div class="row">
+        <span class="helpLink" ng-click="help()">Help</span>
+      </div>
+</div>

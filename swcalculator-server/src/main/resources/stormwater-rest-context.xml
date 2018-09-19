@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	
+    <context:annotation-config />
+    <context:component-scan base-package="gov.epa.stormwater" />
+
+	<!-- Importing Spring Security Settings  -->
+    <!-- <import resource="classpath:security-context.xml"/>   -->
+    <import resource="file:${SWCALCULATOR_HOME}/conf/security-context.xml"/>
+    
+    <!-- 
+ <context:property-placeholder location="file:${SWCALCULATOR_HOME}/conf/stormwater-email.properties" order="1" ignore-unresolvable="true"/>    
+     -->
+    
+    <!-- the current version of application -->
+    <bean id="app_version" class="java.lang.String">
+        <constructor-arg value="ver1.0.0 as of 08/2016" />
+    </bean>
+
+</beans>

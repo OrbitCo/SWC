@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="stormwaterCalculator">
+
+<head>
+    <title>National Stormwater Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+    <!--build:css css/styles.min.css-->
+    <link rel="stylesheet" href="css/styles.css">
+    <!--endbuild-->
+    <base href="/">
+</head>
+
+  </head>
+
+  <body onload="initializeMap();">
+
+    <div id="loadApplicationDiv">
+        <div class="col-md-4 col-md-offset-4 text-center">
+            <div class="alert loadingDivs">
+                <span>Loading Stormwater Calculator</span>
+                <br>
+                <img src="stormwatercalculator/images/Spinner.gif" height="75px" width="75px"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingDiv">
+      <div class="col-md-4 col-md-offset-4 text-center">
+            <div class="alert loadingDivs">
+                <span id="loadingDivText"></span>
+                <br>
+                <img src="stormwatercalculator/images/Spinner.gif" height="75px" width="75px"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertDiv">
+        <div class="row">
+            <div class="col-md-4" id="alertModal">
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="modal" id="closeAlertButton">&times;</button>
+                    <strong>Warning!</strong>
+                    <div id="alertText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveSiteModal" role="dialog" ng-controller="navigationCtrl">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 id="saveSiteModalTitle" class="modal-title">Would you like to save your site?</h4>
+          </div>
+          <div class="modal-body text-center" id="saveSiteModalBody">
+            <div id="saveSiteButtons">
+              <div class="col-xs-6">
+                <button type="button" class="btn btn-default saveSiteButton" ng-click="saveSite()">Yes</button>
+              </div>
+              <div class="col-xs-6">
+                <button type="button" class="btn btn-default saveSiteButton" ng-click="selectNo()">No</button>
+              </div>
+            </div>
+            <div id="nameYourSite">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Name Your Site (Optional)" ng-model="newSiteName">
+              </div>
+              <button type="button" class="btn btn-default saveSiteButton" ng-click="getStarted()">Get Started</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="emailModal" role="dialog" ng-controller="navigationCtrl">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header" id="emailModalHeader">
+                    <button type="button" class="close" data-dismiss="modal" id="emailModalCloseButton">&times;</button>
+                    <h4>Please enter your email address</h4>
+                </div>
+                <div class="modal-body text-center" id="emailModalBody">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Email Address" id="emailAddressValue" ng-model="emailAddressValue">
+                    </div>
+                    <div id="emailButton">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resourcesModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Resources</h4>
+          </div>
+          <div class="modal-body">
+            <ul class="fa-ul">
+              <li><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;<a target="_blank" href="https://nepis.epa.gov/Exe/ZyNET.exe/P100RAYD.TXT?ZyActionD=ZyDocument&Client=EPA&Index=2011+Thru+2015&Docs=&Query=&Time=&EndTime=&SearchMethod=1&TocRestrict=n&Toc=&TocEntry=&QField=&QFieldYear=&QFieldMonth=&QFieldDay=&IntQFieldOp=0&ExtQFieldOp=0&XmlQuery=&File=D%3A%5Czyfiles%5CIndex%20Data%5C11thru15%5CTxt%5C00000025%5CP100RAYD.txt&User=ANONYMOUS&Password=anonymous&SortMethod=h%7C-&MaximumDocuments=1&FuzzyDegree=0&ImageQuality=r75g8/r75g8/x150y150g16/i425&Display=hpfr&DefSeekPage=x&SearchBack=ZyActionL&Back=ZyActionS&BackDesc=Results%20page&MaximumPages=1&ZyEntry=1&SeekPage=x&ZyPURL">U.S. EPA. (2017) National Stormwater Calculator User's Guide Version 1.2 (PDF)</a></li>
+              <br>
+              <li><i class="fa fa-link" aria-hidden="true"></i>&nbsp;<a target="_blank" href="https://www.epa.gov/water-research/national-stormwater-calculator-fact-sheet">Basic Fact Sheet: The Stormwater Calculator - Identifying Green Infrastructure Solutions</a></li>
+              <br>
+              <li><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;<a target="_blank" href="https://www.epa.gov/sites/production/files/2017-09/documents/swc_technical_factsheet_update_final_9-28-17.pdf">Technical Fact Sheet: U.S. EPA. (Revised 2017) National Stormwater Calculator - A desktop tool that helps users control runoff to promote the natural movement of water (PDF)</a></li>
+              <br>
+              <li><i class="fa fa-file-video-o" aria-hidden="true"></i>&nbsp;<a target="_blank" href="https://www.youtube.com/watch?v=ibZTm4_ZQxg&feature=share&list=PLBhfkkujnoRCePsdyYKkBRVX9W4airQt9">EPA's National Stormwater Calculator (Video)</a></li>
+              <br>
+              <li><i class="fa fa-link" aria-hidden="true"></i>&nbsp;<a target="_blank" href="https://www.epa.gov/greeningepa/stormwater-management">Stormwater Management: Provides information and guidance on stormwater management practices.</a></li>
+              <br>
+              <li><i class="fa fa-link" aria-hidden="true"></i>&nbsp;<a target="_blank" href="https://www.epa.gov/polluted-runoff-nonpoint-source-pollution/urban-runoff-low-impact-development">Low Impact Development: Provides information and guidance on the use of low impact development (LID) practices.</a></li>
+              <br>
+              <li><i class="fa fa-link" aria-hidden="true"></i>&nbsp;<a target="_blank" href="http://water.epa.gov/infrastructure/greeninfrastructure/index.cfm">Green Infrastructure: Provides basic information, useful tools, as well as resarch, case studies and a publication library.</a></li>
+              <br>
+              <li><i class="fa fa-link" aria-hidden="true"></i>&nbsp;<a target="_blank" href="http://www3.epa.gov/climatechange/basics/">Climate Change: Provides information and resources on climate chance and its effects in the U.S. and globally.</a></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="helpModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Help</h4>
+                </div>
+                <div class="modal-body" id="helpText">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="forestModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Forest</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Stands of trees with adequate brush and forested litter cover.
+                        <p>
+                            <img src="stormwatercalculator/images/forest.jpg" width="100%" height="100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="meadowModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Meadow</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Non-forested natural areas, scrub, and shrub rural vegetation.
+                        <p>
+                            <img src="stormwatercalculator/images/meadow.jpg" width="100%" height="100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="lawnModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lawn</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Sod lawn, grass, and landscaped vegetation.
+                        <p>
+                            <img src="stormwatercalculator/images/lawn.jpg" width="100%" height="100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="desertModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Desert</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Undeveloped land in arid regions with saltbush, mesquite, and cactus vegetation.
+                        <p>
+                            <img src="stormwatercalculator/images/desert.jpg" width="100%" height="100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="imperviousModal" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Impervious</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Roofs, roads, sidewalks, parking lots and driveways.
+                        <p>
+                            <img src="stormwatercalculator/images/impervious.jpg" width="100%" height="100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="disconnectionModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Disconnection</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/disconnection.gif" width="100%" height="100%" />
+                        </div>
+                        <div class="col-md-6">
+                            <p>Disconnection refers to the practice of directing runoff from impervious areas, such as roofs or parking lots, on to pervious areas such as lawns or vegetative strips, instead of directly into storm drains. This gives the runoff an opportunity to infiltrate into the soil before leaving the site.</p>
+                            <p>The Capture Ratio is the ratio of the pervious area receiving the runoff (such as a lawn area) to the impervious area that generates the runoff.</p>
+                            <p>For example, if 5,000 sq. ft. of roof area is directed onto 3,000 sq. ft. of lawn area then the Capture Ratio would be 3,000 / 5,000 or 60%.</p>
+                            <p><a href="http://www.vwrrc.vt.edu/swc/NonPBMPSpecsMarch11/VASWMBMPSpec1DISCONNECTION.html" target="_blank">Learn More</a></p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>% Capture Ratio:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='disconnectionCaptureSlider' data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="100" id="disconnectionCaptureValue" onkeyup="changeLIDModalSlider(0);">
+                                <span class="input-group-addon" id="sizing-addon2">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('disconnection');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rainHarvestingModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Rain Harvesting</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="stormwatercalculator/images/rhCistern.jpg" width="100%" height="100%" />
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/rhCistern_1.png" width="85%" height="100%" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Rain harvesting systems collect runoff from rooftops and convey it to a cistern tank where it can be used for non-potable water uses and on-site infiltration.</p>
+                            <p>The harvesting system is assumed to consist of a given number of fixed-sized cisterns per 1000 square feet of rooftop area captured.</p>
+                            <p>The water from each cistern is withdrawn at a constant rate and is assumed to be consumed or infiltrated entirely on-site.</p>
+                            <p><a href="http://www.vwrrc.vt.edu/swc/NonPBMPSpecsMarch11/VASWMBMPSpec6RAINWATERHARVESTING.html" target="_blank">Learn More</a></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Cistern Size:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainHarvestingCisternSlider' data-slider-min="25" data-slider-max="5500" data-slider-step="1" data-slider-value="100" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="100" id="rainHarvestingCisternValue" onkeyup="changeLIDModalSlider(1);">
+                                <span class="input-group-addon" id="sizing-addon2">Gal.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Emptying Rate:</strong></span>
+                        </div>
+                        <div class="col-xs-6 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainHarvestingRateSlider' data-slider-min="25" data-slider-max="5000" data-slider-step="1" data-slider-value="50" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-6 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="50" id="rainHarvestingRateValue" onkeyup="changeLIDModalSlider(2);">
+                                <span class="input-group-addon" id="sizing-addon2">Gal./Day</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Number per 1,000 sq. ft.:</strong></span>
+                        </div>
+                        <div class="col-xs-6 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainHarvestingFeetSlider' data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="4" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-6 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="4" id="rainHarvestingFeetValue" onkeyup="changeLIDModalSlider(3);">
+                                <span class="input-group-addon" id="sizing-addon2">/1,000 sq. ft.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default designStormButton" onclick="calculateDesignStorm('rainHarvesting')" disabled>Size for Design Storm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('rainHarvesting');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rainGardensModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Rain Gardens</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="stormwatercalculator/images/rainGarden1.gif" width="100%" height="100%" />
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/rainGarden2.gif" width="100%" height="100%" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Rain Gardens are shallow depressions filled with an engineered soil mix that supports vegetative growth. They are usually used on individual home lots to capture roof runoff.</p>
+                            <p>Typical soil depths range from 6 to 18 inches</p>
+                            <p>The Capture Ratio is the ratio of the rain garden's area to the impervious area that drains onto it.</p>
+                            <p><a href="http://www.vwrrc.vt.edu/swc/NonPBMPSpecsMarch11/VASWMBMPSpec9BIORETENTION.html" target="_blank">Learn More</a></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Ponding Height:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainGardensPondingSlider' data-slider-min="0" data-slider-max="12" data-slider-step="1" data-slider-value="6" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="6" id="rainGardensPondingValue" onkeyup="changeLIDModalSlider(4);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Soil Media Thickness:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainGardensThicknessSlider' data-slider-min="1" data-slider-max="36" data-slider-step="1" data-slider-value="12" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="12" id="rainGardensThicknessValue" onkeyup="changeLIDModalSlider(5);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Soil Media Conductivity:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainGardensMediaSlider' data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="10" id="rainGardensMediaValue" onkeyup="changeLIDModalSlider(6);">
+                                <span class="input-group-addon" id="sizing-addon2">in./hr</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>% Capture Ratio:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='rainGardensCaptureSlider' data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="5" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="5" id="rainGardensCaptureValue" onkeyup="changeLIDModalSlider(7);">
+                                <span class="input-group-addon" id="sizing-addon2">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="rainGardensPretreatment">&nbsp;&nbsp;Pre-Treatment
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default designStormButton" onclick="calculateDesignStorm('rainGardens')" disabled>Size for Design Storm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('rainGardens');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="greenRoofsModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Green Roofs</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/greenRoof1.gif" width="75%" height="75%" />
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/greenRoof2.gif" width="100%" height="100%" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Green Roofs (also known as Vegetated Roofs) are bio-retention systems placed on roof surfaces that capture and temporarily store rainwater in a soil growing medium. They consist of a layered system of roofing designed to support plant growth and retain water for plant uptake while preventing ponding on the roof surface.</p>
+                            <p>The thickness used for the growing medium typically ranges from 3 to 6 inches.</p>
+                            <p><a href="http://www.vwrrc.vt.edu/swc/NonPBMPSpecsMarch11/VASWMBMPSpec9BIORETENTION.html" target="_blank">Learn More</a></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Soil Media Thickness:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='greenRoofsThicknessSlider' data-slider-min="1" data-slider-max="36" data-slider-step="1" data-slider-value="4" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="4" id="greenRoofsThicknessValue" onkeyup="changeLIDModalSlider(8);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Soil Media Conductivity:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='greenRoofsMediaSlider' data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="10" id="greenRoofsMediaValue" onkeyup="changeLIDModalSlider(9);">
+                                <span class="input-group-addon" id="sizing-addon2">in./hr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('greenRoofs');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="streetPlantersModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Street Planters</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/streetPlanter1.gif" width="70%" height="70%" />
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/streetPlanter2.gif" width="70%" height="70%" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Street Planters consist of concrete boxes filled with an engineered soil that supports vegetative growth. Beneath the soil is a gravel bed that provides additional storage.</p>
+                            <p>The walls of a planter extend 3 to 12 inches above the soil bed to allow for ponding withing the unit. The thickness of the soil growing medium ranges from 6 to 24 inches while gravel beds are 6 to 18 inches in depth.</p>
+                            <p>The planter's Capture Ratio is the ratio of its area to the impervious area whose runoff it captures.</p>
+                            <p><a href="http://www.vwrrc.vt.edu/swc/NonPBMPSpecsMarch11/VASWMBMPSpec9BIORETENTION.html" target="_blank">Learn More</a></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Ponding Height:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='streetPlantersPondingSlider' data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="6" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="6" id="streetPlantersPondingValue" onkeyup="changeLIDModalSlider(10);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Soil Media Thickness:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='streetPlantersThicknessSlider' data-slider-min="1" data-slider-max="36" data-slider-step="1" data-slider-value="18" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="18" id="streetPlantersThicknessValue" onkeyup="changeLIDModalSlider(11);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Soil Media Conductivity:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='streetPlantersMediaSlider' data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="10" id="streetPlantersMediaValue" onkeyup="changeLIDModalSlider(12);">
+                                <span class="input-group-addon" id="sizing-addon2">in./hr</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Gravel Bed Thickness:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='streetPlantersGravelSlider' data-slider-min="2" data-slider-max="36" data-slider-step="1" data-slider-value="12" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="12" id="streetPlantersGravelValue" onkeyup="changeLIDModalSlider(13);">
+                                <span class="input-group-addon" id="sizing-addon2">in./hr</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>% Capture Ratio:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='streetPlantersCaptureSlider' data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="6" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="6" id="streetPlantersCaptureValue" onkeyup="changeLIDModalSlider(14);">
+                                <span class="input-group-addon" id="sizing-addon2">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default designStormButton" onclick="calculateDesignStorm('streetPlanters')" disabled>Size for Design Storm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('streetPlanters');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="infiltrationBasinsModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Infiltration Basins</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/infiltrationBasin1.jpg" width="70%" height="70%" />
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/infiltrationBasin2.jpg" width="70%" height="70%" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Infiltration basins are shallow depressions filled with grass or other natural vegetation that capture runoff from adjoining areas and allow it to infiltrate into the soil.</p>
+                            <p>The calculator assumes that the infiltration rate from the basin is the same as for site's native soil.</p>
+                            <p>The basin's Capture Ratio is the area of the basin relative to the impervious area whose runoff it captures.</p>
+                            <p><a href="https://www.escondido.org/Data/Sites/1/media/pdfs/Utilities/BMPInfiltrationBasin.pdf" target="_blank">Learn More</a></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Basin Depth:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='infiltrationBasinsBasinSlider' data-slider-min="1" data-slider-max="24" data-slider-step="1" data-slider-value="6" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="6" id="infiltrationBasinsBasinValue" onkeyup="changeLIDModalSlider(15);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>% Capture Radio:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='infiltrationBasinsCaptureSlider' data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="5" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="5" id="infiltrationBasinsCaptureValue" onkeyup="changeLIDModalSlider(16);">
+                                <span class="input-group-addon" id="sizing-addon2">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="infiltrationBasinsPretreatment">&nbsp;&nbsp;Pre-Treatment
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default designStormButton" onclick="calculateDesignStorm('infiltrationBasins')" disabled>Size for Design Storm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('infiltrationBasins');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="permeablePavementModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Permeable Pavement</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/PorousPavement2.jpg" width="100%" height="100%" />
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="stormwatercalculator/images/permeablePavement.jpg" width="60%" height="60%" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Continuous Permeable Pavement systems are excavated areas filled with gravel and paved over with a porous concrete or asphalt mix.</p>
+                            <p>Modular Block systems are similar except that permeable block pavers are used instead.</p>
+                            <p>Normally all rainfall will immediately pass through the pavement into the gravel storage layer below it where it can infiltrate at natural rates into the site's native soil.</p>
+                            <p>Pavement layers are usually 4 to 6 inches in height while the gravel storage layer is typically 6 to 18 inches high.</p>
+                            <p>The Capture Ratio is the percent of the treated area (street or parking lot) that is replaced with permeable pavement.</p>
+                            <p><a href="http://www.vwrrc.vt.edu/swc/NonPBMPSpecsMarch11/VASWMBMPSpec7PERMEABLEPAVEMENT.html" target="_blank">Learn More</a></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Pavement Thickness:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='permeablePavementPavementSlider' data-slider-min="1" data-slider-max="12" data-slider-step="1" data-slider-value="6" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="6" id="permeablePavementPavementValue" onkeyup="changeLIDModalSlider(17);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>Gravel Layer Thickness:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='permeablePavementGravelSlider' data-slider-min="0" data-slider-max="36" data-slider-step="1" data-slider-value="18" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="18" id="permeablePavementGravelValue" onkeyup="changeLIDModalSlider(18);">
+                                <span class="input-group-addon" id="sizing-addon2">in.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-2">
+                            <span><strong>% Capture Ratio:</strong></span>
+                        </div>
+                        <div class="col-xs-8 col-sm-7 col-md-7">
+                            <input class="lidModalSlider" type="text" data-slider-id='permeablePavementCaptureSlider' data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-tooltip="hide" />
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-3">
+                            <div class="input-group input-group-sm sliderGroup">
+                                <input type="number" class="form-control sliderValue" aria-describedby="sizing-addon2" value="100" id="permeablePavementCaptureValue" onkeyup="changeLIDModalSlider(19);">
+                                <span class="input-group-addon" id="sizing-addon2">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="permeablePavementPretreatment">&nbsp;&nbsp;Pre-Treatment
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default designStormButton" onclick="calculateDesignStorm('permeablePavement')" disabled>Size for Design Storm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Save and Return</button>
+                    <button type="button" class="btn btn-default" onclick="restoreDefaults('permeablePavement');">Restore Defaults</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="reDevelopmentModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Re-Development</h4>
+          </div>
+          <div class="modal-body">
+            <p>Re-Development is construction that is a change in existing development (land cover, land use, or similar development alteration) which requires new or alteration of existing stormwater management facilities.</p>
+            <p>Costs of removal, decommissioning, or alteration of existing structures or additional (new) infrastructure is typically required to connect existing structures and results in costs that are greater than what would be anticipated with a new development site.</p>
+            <div class="col-md-6 text-center">
+              <img src="stormwatercalculator/images/redevelopmentafter.jpg" alt="Before re-development picture" width="100%" height="100%" />
+            </div>
+            <div class="col-md-6 text-center">
+              <img src="stormwatercalculator/images/redevelopmentbefore.jpg" alt="After re-development picture" width="100%" height="100%" />
+            </div>
+            <p>Re-development and extensive retrofit costs are typically higher than new development costs because existing structures might have to be removed or new structures may be required but may not be located in a preferred location.</p>
+            <p>Selecting “Re-development” on the “Project Cost” tab of the National Stormwater Calculator influences the site complexity, and shifts the costs towards a higher complexity cost estimation.</p>
+            <p>Re-development combined with information on site suitability, topography, and soil drainage determines whether complex, typical, or simple cost curves apply. See User Guide for more information.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="newDevelopmentModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">New Development</h4>
+          </div>
+          <div class="modal-body">
+            <p>New development is construction that occurs on a greenfield (undeveloped) site or does not fit into the definition of redevelopment or retrofit.</p>
+            <p>New development allows site planners to more efficiently place infrastructure to balance costs of grading, protection of existing topography, and other natural features which can often reduce or avoid these costs and the costs more typical of redevelopment including removal, decommissioning and alteration of existing structures.</p>
+            <div class="col-md-6 text-center">
+              <img src="stormwatercalculator/images/newdevelopmentafter.jpg" alt="Before new-development picture" width="100%" height="100%" />
+            </div>
+            <div class="col-md-6 text-center">
+              <img src="stormwatercalculator/images/newdevelopmentbefore.jpg" alt="After new-development picture" width="100%" height="100%" />
+            </div>
+            <p>Selecting “New Development” on the “Project Cost” tab of the National Stormwater Calculator influences the site complexity, and shifts the costs towards a lower complexity cost estimation.</p>
+            <p>New development combined with information on site suitability, topography, and soil drainage determines whether complex, typical, or simple cost curves apply. See User Guide for more information.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="poorModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Poor Site Suitability</h4>
+          </div>
+          <div class="modal-body">
+            <p>Site suitability is a measure of construction feasibility and includes factors such as topography, soil type, slope, and other physical features that might result in higher implementation costs.</p>
+            <p>Poor site suitability refers to sites that have a number of the following characteristics:</p>
+            <ul>
+                <li>Physical obstructions,</li>
+                <li>Utility conflicts,</li>
+                <li>Other features that are likely to make construction of stormwater management infrastructure challenging and more costly.</li>
+            </ul>
+            <div class="col-md-12">
+                <img src="stormwatercalculator/images/poor.jpg" width="100%" height="100%" />
+            </div>
+            <p>Sites determined to have poor suitability for LID practices are typically higher in cost because of the potential need for additional excavation, accommodation for physical obstructions, required retaining walls, challenging access, distant haul locations, required dewatering, the addition of engineered or custom media blends, and need to address geotechnical or groundwater concerns.</p>
+            <p>Selecting “Site Suitability - Poor” on the “Project Cost” tab of the National Stormwater Calculator influences the site complexity, and shifts the costs towards a higher complexity cost estimation.</p>
+            <p>Poor site suitability combined with information on development type, topography, and soil drainage determines whether complex, typical, or simple cost curves apply. See User Guide for more information.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="moderateModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Moderate Site Suitability</h4>
+          </div>
+          <div class="modal-body">
+            <p>Site suitability is a measure of construction feasibility and includes factors such as topography, soil type, slope, and other physical features that might result in higher implementation costs.</p>
+            <p>Moderate site suitability refers to sites that have several of the following characteristics:</p>
+            <ul>
+                <li>Few physical obstructions,</li>
+                <li>Few utility conflicts,</li>
+                <li>Other features that may make construction of stormwater management infrastructure challenging and likely more costly, but less than a site with poor site suitability.</li>
+            </ul>
+            <div class="col-md-12">
+                <img src="stormwatercalculator/images/moderate.jpg" width="100%" height="100%" />
+            </div>
+            <p>Sites determined to have moderate suitability for LID practices may result in higher costs because of the potential need for additional excavation, accommodation for physical obstructions including utilities, required retaining walls, moderately challenging access, limited dewater, the addition of engineered or custom media blends, or need to address geotechnical or groundwater concerns.</p>
+            <p>Selecting “Site Suitability - Moderate” on the “LID Controls” tab of the National Stormwater Calculator influences the site complexity, and may shift the costs towards a higher complexity cost estimation compared to.</p>
+            <p>Moderate site suitability combined with information on development type, topography, and soil drainage determines whether complex, typical, or simple cost curves apply. See User Guide for more information.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="excellentModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Excellent Site Suitability</h4>
+          </div>
+          <div class="modal-body">
+            <p>Site suitability is a measure of construction feasibility and includes factors such as topography, soil type, slope, and other physical features that might result in higher implementation costs.</p>
+            <p>Excellent site suitability refers to sites that have the following characteristics:</p>
+            <ul>
+                <li>Little to no physical obstructions,</li>
+                <li>No utility conflicts,</li>
+                <li>Few other features that would make construction of stormwater management infrastructure challenging and likely more costly.</li>
+            </ul>
+            <div class="col-md-12">
+                <img src="stormwatercalculator/images/excellent.jpg" width="100%" height="100%" />
+            </div>
+            <p>Sites determined to have excellent suitability for LID practices typically have lower costs because there is little need for: excavation, obstruction accommodation, relocation, utility changes, or additional structures such as retaining walls. On site soils are suitable for infiltration without geotechnical or groundwater concerns.</p>
+            <p>Selecting “Site Suitability - Excellent” on the “LID Controls” tab of the National Stormwater Calculator influences the site complexity, and shifts the costs towards a lower complexity cost model.</p>
+            <p>Excellent site suitability combined with information on development type, topography, and soil drainage determines whether complex, typical, or simple cost curves apply. See User Guide for more information.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="costRegionModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Cost Regions</h4>
+          </div>
+          <div class="modal-body">
+            <p>Your “region” has been determined from the Location tab. Using data from the Bureau of Labor Statistics (BLS) a multiplier has been computed representing the relative regional differences in costs for your nearest region (unless “National” is shown) compared to National costs. Three regions are reported from 20 of the major cities for which BLS data is available. Users can select another region or select “National” to apply a multiplier of 1, representing a national average. If you prefer to apply your own multiplier, select “Other” and enter the multiplier in the Regional Multiplier field (a multiplier >1 would adjust above the National average, while a multiplier
+              < 1 would adjust below the National average). The default multiplier for your region is shown in the Regional Multiplier box. The light blue circles in the figure below represent areas within a 100-mile radius of each major city. See User Guide for more information.</p>
+            <div class="col-md-12">
+                <img src="stormwatercalculator/images/costregions.jpg" width="100%" height="100%" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-top" ng-controller="navigationCtrl">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="iconBar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="brand-centered">
+                    <a class="navbar-brand" ng-click="go('stormwatercalculator/')"><img src="stormwatercalculator/images/epaLogo.png" class="img-responsive pull-left"><span>National Stormwater Calculator</span></a>
+                </div>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ><a class="navigationLink disabled" ng-click="openSaveModal()">NEW</a></li>
+                    <li><a class="navigationLink disabled" ng-click="saveSite()">SAVE</a></li>
+                    <li><a ng-click="uploadFile()" id="openFileButton">OPEN</a></li>
+                    <input type="file" id="uploadFile" accept=".xml" />
+                    <li><a ng-click="openResources()">RESOURCES</a></li>
+                    <li><a href="mailto:swc@epa.gov">CONTACT</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div class="row">
+        <div class="navcontainer col-xs-12 col-md-2" ng-controller="navigationCtrl">
+            <ul class="navigation">
+                <li class="nav-item navigationLink">
+                    <a id="location" class="navigationIcon active" ng-click="go('stormwatercalculator/location')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-location"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Location</font>
+                    </a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="soiltype" class="navigationIcon" ng-click="go('stormwatercalculator/soiltype')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-soilType"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Soil Type</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="soildrainage" ng-click="go('stormwatercalculator/soildrainage')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-soilDrainage"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Soil Drainage</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="topography" ng-click="go('stormwatercalculator/topography')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-topography" </use>
+                        </svg>
+                        <br id="mobileMenuBreak">Topography</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="precipitation" ng-click="go('stormwatercalculator/precipitation')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-precipitation"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Precipitation/Evaporation</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="climate" ng-click="go('stormwatercalculator/climatechange')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-climate"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Climate Change</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="land" ng-click="go('stormwatercalculator/landcover')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-land"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Land Cover</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="lid" ng-click="go('stormwatercalculator/lidcontrols')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-lid"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">LID Controls</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="cost" ng-click="go('stormwatercalculator/projectcost')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-cost"></use>
+                        </svg>
+                        <br id="mobileMenuBreak">Project Cost</a>
+                </li>
+                <li class="nav-item navigationLink">
+                    <a id="results" ng-click="go('stormwatercalculator/results')">
+                        <svg class="icons menuIcon">
+                            <use xlink:href="stormwatercalculator/sprite.svg#icon-results"></use>
+                        </svg>
+                        <br id="mobileMenuBreak" class="menuIcon">Results</a>
+                </li>
+            </ul>
+        </div>
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger" class="hidden-xs hidden-sm"><i class="fa fa-chevron-circle-right" aria-hidden="true" id="navigationArrow"></i></label>
+        <div class="site-wrap">
+            <div id="modal">
+                <div ng-view></div>
+            </div>
+            <div id="bingMap">
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
+    <!--build:js js/main.min.js -->
+    <script src="stormwatercalculator/js/app.js"></script>
+    <!-- endbuild -->
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol' async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+    <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.60/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.min.js"></script>
+    <script defer src="stormwatercalculator/svgxuse.js"></script>
+    <script src="stormwatercalculator/js/png.js"></script>
+    <script src="stormwatercalculator/js/zlib.js"></script>
+</body>
+
+</html>
