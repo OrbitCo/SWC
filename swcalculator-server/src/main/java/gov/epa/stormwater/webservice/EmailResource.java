@@ -14,6 +14,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import gov.epa.stormwater.model.SuccessResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import gov.epa.stormwater.service.GeoDataService;
@@ -63,7 +65,7 @@ public class EmailResource extends BaseResource {
             return swcExceptionResponse(notificationEx.toString());
         }
 
-        return Response.status(200).entity("Email sent with precip data").build();
+        return Response.status(200).entity(new SuccessResponseModel("Email sent with precip data")).build();
     }
 
     @GET
@@ -88,7 +90,7 @@ public class EmailResource extends BaseResource {
             return swcExceptionResponse(notificationEx.toString());
         }
 
-        return Response.status(200).entity("Email sent with evap data").build();
+        return Response.status(200).entity(new SuccessResponseModel("Email sent with evap data")).build();
     }
 
     

@@ -4488,6 +4488,8 @@ app.controller('precipitationCtrl', function($scope)
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
     {
         $('#emailModal').modal();
+        $('#emailModalHeader').show();
+        $('#emailModalBody').html('<div class="form-group"><input type="text" class="form-control" placeholder="Email Address" id="emailAddressValue" onchange="determineEmailValue()" ng-model="emailAddressValue"></div><div id="emailButton"></div>');
         $('#emailButton').html('<button type="button" class="btn btn-default" id="sendDataButton" onclick="downloadRainfallWeatherDataMobile();">Send Precipitation Data File</button>');
     }
     else
