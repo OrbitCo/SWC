@@ -1771,7 +1771,7 @@ function downloadRainfallWeatherDataMobile()
         dataType: 'json',
         headers:
         {
-            'Authorization': 'Basic c3djYWxjdWxhdG9yQGdtYWlsLmNvbTpTdDBybXdhdGVy'
+            'Authorization': 'Basic c3djYWRtaW46c1Qwcm13QHQzciExMjM='
         },
         success: function ()
         {
@@ -3853,6 +3853,8 @@ app.controller("navigationCtrl", function($scope, $location)
       //  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
       //  {
             $('#emailModal').modal();
+            $('#emailModalHeader').show();
+            $('#emailModalBody').html('<div class="form-group"><input type="text" class="form-control" placeholder="Email Address" id="emailAddressValue" onchange="determineEmailValue()" ng-model="emailAddressValue"></div><div id="emailButton"></div>');
             $('#emailButton').html('<button type="button" class="btn btn-default" id="sendDataButton" onclick="saveSiteMobile();">Send SWC XML File</button>');
       //  }
       /*  else
