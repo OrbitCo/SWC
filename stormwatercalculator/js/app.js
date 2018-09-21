@@ -1809,12 +1809,13 @@ function saveSiteMobile()
         type: 'POST',
         url: '/swcalculator-server/api/v1/email/emailXml/' + email + '?fileName=' + sessionStorage.siteName + '.xml',
         data: xmlSaveString,
+        contentType: 'application/xml',
         async: true,
         headers:
         {
             'Authorization': 'Basic c3djYWRtaW46c1Qwcm13QHQzciExMjM='
         },
-        dataType: 'json',
+      //  dataType: 'json',
         success: function ()
         {
             $('#emailModalBody').html('<span>SWC XML file sent.</span><button type="button" class="btn btn-default" data-dismiss="modal" style="width: 100%; eight: 50px;">Close</button>');
