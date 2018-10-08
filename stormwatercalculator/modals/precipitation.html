@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="precipitationModal">
  <div class="col-md-12">
     <h3>Precipitation/Evaporation</h3>
   </div>
@@ -11,12 +11,38 @@
           <a data-toggle="collapse" href="javascript:void(0);" data-target="#collapse1" ng-click="openCloseDirections();"><h4 class="panel-title">Directions<i class="fa fa-chevron-right directionsIcon" aria-hidden="true"></i></h4></a>
         </div>
         <div id="collapse1" class="panel-collapse collapse in">
-          <div class="panel-body"><p>Select a rain gage location to use as a source of hourly rainfall data and a weather station to use as a source for evaporation rates.</p>
+          <div class="panel-body">
+            <p>Select a rain gage location to use as a source of hourly rainfall data and a weather station to use as a source for evaporation rates.</p>
             <p>Select the checkbox if you would like the calculator to use the same location for both.</p>
             <p>The period of record and average annual rainfall and average potential daily rate are listed below.</p>
             <p>Use the "Download rainfall/evaporation data" option only if you need to use the data in some other application.</p>
+            <ul>
+              <li><a href="www.google.com"><p>BASINS</p></a></li>
+              <li><a href="www.google.com"><p>NLDAS</p></a></li>
+              <li><a href="www.google.com"><p>GLDAS</p></a></li>
+            </ul>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+        <label for="yearsService">Enter # of years for service data:</label>
+        <input type="number" class="form-control" min="1" step="1" ng-model="yearsService" id="yearsService" ng-change="yearsServiceFunc(yearsService)"/>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <div class="checkbox basinsChkboxDiv">
+        <label><input type="checkbox" id="basinsChkbox" ng-model="basinsChkbox" ng-change="selectBasinsChkbox(basinsChkbox)">Use BASINS Archived data</label>
       </div>
     </div>
   </div>

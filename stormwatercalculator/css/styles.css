@@ -104,6 +104,23 @@ select {
   border: 0 !important;
   border: 1px solid #ccc !important; }
 
+  /* custom css */
+  #precipitationModal input[type="number"] {
+    border : 1px solid #199493 !important;
+  }
+  #yearsService {
+    border : 1px solid #199493 !important;
+  }
+
+  #basinsChkbox {
+    width: 17px;
+    height: 17px;
+    /* outline: 2px solid #199493; */
+  }
+  .checkbox.basinsChkboxDiv label {
+      font-weight : 700;
+      line-height : 2;
+  }
 #loadApplicationDiv {
   position: fixed;
   top: 0;
@@ -536,6 +553,8 @@ label[for="nav-trigger"] {
   overflow: hidden; }
   #modal legend {
     color: #fff; }
+
+
 
 @media screen and (min-width: 992px) {
   .navcontainer:before {

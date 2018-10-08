@@ -138,11 +138,18 @@ public class CalculateServiceImpl implements CalculateService {
             if (rainFile == null) {
                 logger.error("CalculateServiceImpl.calculate(): Error trying to find rainfall data file for precStationID: " + siteData.getPrecStationID());
                 throw new SWCException("Could not retrieve rainfall data for this site.");
-            };
+            }
 
-            siteData.setRainFile(Constants.FILE_PATH_SWC_DATA + rainFile);
-            System.out.println("########## rainFile = " + rainFile);
-            // Apply climate change adjustments            
+          if (siteData.getIsHms()) {
+                System.out.println("***HMS SERVICE ");
+                siteData.setRainFile(Constants.FILE_PATH_HMS_DATA + rainFile);
+            } else {
+
+
+                siteData.setRainFile(Constants.FILE_PATH_SWC_DATA + rainFile);
+            }
+
+              // Apply climate change adjustments
             climateService.updateAdjustments(siteData);
 
             // Create a base SWMM input file for the site
@@ -150,9 +157,6 @@ public class CalculateServiceImpl implements CalculateService {
 
             // Modify the base input file for a long term simulation
             writeLongTermInpFile(siteData);
-
-
-            System.out.println( "#####runSwmm "+ siteData.getInpFile()+"   "+siteData.getRptFile()+"  "+ siteData.getOutFile());
 
             i = runSwmm(siteData.getInpFile(), siteData.getRptFile(), siteData.getOutFile());
 
@@ -200,13 +204,13 @@ public class CalculateServiceImpl implements CalculateService {
             try {
                 File file;
                 file = new File(siteData.getInpFile());
-                Files.deleteIfExists(file.toPath());
+              /*  Files.deleteIfExists(file.toPath());
                 file = new File(siteData.getInpFileBase());
                 Files.deleteIfExists(file.toPath());
                 file = new File(siteData.getRptFile());
                 Files.deleteIfExists(file.toPath());
                 file = new File(siteData.getOutFile());
-                Files.deleteIfExists(file.toPath());
+                Files.deleteIfExists(file.toPath()); */
             } catch (Exception e) {
 
             }
@@ -668,6 +672,7 @@ public class CalculateServiceImpl implements CalculateService {
             File file = Utils.createSWCFile(siteData.getInpFile());
 
             Utils.copyFileUsingFileStreams(Utils.getSWCFile(siteData.getInpFileBase()), file);
+
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             Utils.writeLine(bw, "[RAINGAGES]");
@@ -695,6 +700,7 @@ public class CalculateServiceImpl implements CalculateService {
             logger.error("CalculateServiceImpl.writeLongTermInpFile: " + e.getMessage());
             throw new SWCException(e.getMessage());
         }
+
     }
 
     //----------------------------------------------------------------

@@ -79,9 +79,9 @@ public class EmailResource extends BaseResource {
             @ApiParam(value = "Evap Station Name.  Used as part of file name.", required = false)
             @QueryParam("staNam") String staNam,
             @ApiParam(value = "emailTo", required = true)
-            @PathParam("emailTo") String emailTo      
-    ) {        
-       
+            @PathParam("emailTo") String emailTo
+    ) {
+
         try {
             geoDataService.emailEvapData(evapStationID, emailTo, staNam);
         } catch ( Exception notificationEx) {
@@ -93,7 +93,7 @@ public class EmailResource extends BaseResource {
         return Response.status(200).entity(new SuccessResponseModel("Email sent with evap data")).build();
     }
 
-    
+
     @POST
     @ApiOperation(value = "Email Site Data File", notes = "")
     @Path("/emailFile/{emailTo}")
@@ -103,23 +103,23 @@ public class EmailResource extends BaseResource {
             @PathParam("emailTo") String emailTo,
             @FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-     
+
         try {
 
-            //InputStreamResource is = new InputStreamResource(fileInputStream);            
+            //InputStreamResource is = new InputStreamResource(fileInputStream);
             ByteArrayResource in = new ByteArrayResource(IOUtils.toByteArray(fileInputStream));
             emailNotificationService.sendMailAttachment(emailTo, Constants.EMAIL_SUBJ_SITE, Constants.EMAIL_BODY_SITE, contentDispositionHeader.getFileName(), in);
-            
+
         } catch ( Exception notificationEx) {
             logger.error("Error emailFileData()",
                     notificationEx);
             return swcExceptionResponse(notificationEx.toString());
         }
-        
+
         return Response.status(200).entity("Email sent with attached file").build();
 
     }
-    
+
     @POST
     @ApiOperation(value = "Email XML", notes = "Expecting String representation of XML")
     @Path("/emailXml/{emailTo}")
@@ -134,27 +134,27 @@ public class EmailResource extends BaseResource {
     ){
 
         if (request == null) {
-             return swcErrorResponse(Response.Status.NOT_ACCEPTABLE, "Missing site input data", "No site input data found");
+            return swcErrorResponse(Response.Status.NOT_ACCEPTABLE, "Missing site input data", "No site input data found");
         }
-                    
+
         if (fileName == null || fileName.equals("")) {
             fileName = "SWCalc_SavedSite.xml";
         }
-        
+
         try {
 
             //InputStreamResource is = new InputStreamResource(fileInputStream);
             ByteArrayResource in = new ByteArrayResource(request.getBytes("UTF-8"));
             emailNotificationService.sendMailAttachment(emailTo, Constants.EMAIL_SUBJ_SITE, Constants.EMAIL_BODY_SITE, fileName, in);
-            
+
         } catch ( Exception notificationEx) {
             logger.error("Error emailFileData()",
                     notificationEx);
             return swcExceptionResponse(notificationEx.toString());
         }
-        
+
         return Response.status(200).entity("Email sent with attached file").build();
 
     }
-    
+
 }

@@ -50,17 +50,12 @@ public class CaculateResource extends BaseResource {
 //        System.out.println(" ############ request = " + request.toString());
 
         if (request == null) {
-            System.out.println("########## request == null");
-
-             return swcErrorResponse(Response.Status.NOT_ACCEPTABLE, "Missing site input data", "No site input data found");
+              return swcErrorResponse(Response.Status.NOT_ACCEPTABLE, "Missing site input data", "No site input data found");
         }
         
         try {
-            System.out.println("######### output = calculateService.computeResults(request);");
 
             output = calculateService.computeResults(request);
-
-
 
         } catch (SWCException e) {
             logger.error("Failed to compute results due to exception.",
@@ -72,8 +67,5 @@ public class CaculateResource extends BaseResource {
 
         return Response.status(Response.Status.OK).entity(output).build();
     }
-
-
-
 
 }

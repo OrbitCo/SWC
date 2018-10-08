@@ -236,7 +236,7 @@ public class ClimateServiceImpl implements ClimateService {
                 return "";
         }
 
-//        System.out.println("evapData = " + evapData.toString());
+       System.out.println("evapData ONE= " + evapData.toString());
 
         String s = "";
 
@@ -245,7 +245,7 @@ public class ClimateServiceImpl implements ClimateService {
             s = s + evapData.get(i).toString() + "  ";
         }
 
-//        System.out.println("s = " + s);
+       System.out.println("s = " + s);
 
         return s;
 

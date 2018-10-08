@@ -21,6 +21,10 @@ public class Constants {
     public static final String FILE_PATH_SWC_DATA = System.getProperty("SWCALCULATOR_HOME") + File.separator
             + "data" + File.separator;
 
+    public static final String FILE_PATH_HMS_DATA = System.getProperty("SWCALCULATOR_HOME") + File.separator
+            + "data" + File.separator
+            + "hms" + File.separator;;
+
     public static final String FILE_PATH_INPUT = FILE_PATH + File.separator + "inpFile";
     public static final String FILE_PATH_INPUT_BASE = FILE_PATH + File.separator + "inpFile1";
     public static final String FILE_PATH_RPT = FILE_PATH + File.separator + "rptFile";

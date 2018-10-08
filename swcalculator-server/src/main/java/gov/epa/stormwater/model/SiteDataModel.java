@@ -96,6 +96,8 @@ public class SiteDataModel {
     private Integer cmbCostRegion;
     private Double tbRegMultiplier;
 
+    private Boolean isHms;
+
     //Hold MET station IDs
     private String precStationID;
     private String evapStationID;
@@ -566,8 +568,16 @@ public class SiteDataModel {
         return ppPretreatment;
     }
 
-    public void setPpPretreatment(Boolean ppPretreatment) {
-        this.ppPretreatment = ppPretreatment;
+    public void setPpPretreatment(Boolean isHms) {
+        this.isHms = isHms;
+    }
+
+    public Boolean getIsHms() {
+        return isHms;
+    }
+
+    public void setIsHms(Boolean isHms) {
+        this.isHms = isHms;
     }
 
     public Integer getCmbCostRegion() {
