@@ -54,6 +54,9 @@ public class CalculateServiceImpl implements CalculateService {
     @Autowired
     GeoDataService geoDataService;
 
+    @Autowired
+    private HmsService hmsService;
+
     @Override
     public int runSwmm(String inFile, String rptFile, String outFile) throws SWCException {
         int exitValue = -999;
@@ -142,6 +145,7 @@ public class CalculateServiceImpl implements CalculateService {
 
           if (siteData.getIsHms()) {
                 System.out.println("***HMS SERVICE ");
+                hmsService.getHMSData("2017", "2018");
                 siteData.setRainFile(Constants.FILE_PATH_HMS_DATA + rainFile);
             } else {
 
