@@ -145,11 +145,9 @@ public class CalculateServiceImpl implements CalculateService {
 
           if (siteData.getIsHms()) {
                 System.out.println("***HMS SERVICE ");
-                hmsService.getHMSData("2017", "2018");
+                hmsService.getHMSData(Constants.FILE_PATH_HMS_DATA + rainFile, siteData.getPrecStationID(), "2017", "2018");
                 siteData.setRainFile(Constants.FILE_PATH_HMS_DATA + rainFile);
             } else {
-
-
                 siteData.setRainFile(Constants.FILE_PATH_SWC_DATA + rainFile);
             }
 

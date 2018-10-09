@@ -7,12 +7,24 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import gov.epa.stormwater.model.bls.BlsResponseModel;
 import gov.epa.stormwater.model.hms.*;
 import gov.epa.stormwater.service.common.SWCException;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service("hmsService")
 public class HmsServiceImpl implements HmsService {
@@ -21,7 +33,7 @@ public class HmsServiceImpl implements HmsService {
             .getLogger(gov.epa.stormwater.service.HmsServiceImpl.class);
 
     @Override
-    public boolean getHMSData(String startYear, String endYear) throws SWCException {
+    public boolean getHMSData(String filePath, String stationId, String startYear, String endYear) throws SWCException {
 
         try {
 //               String URL = "https://qedinternal.epa.gov/hms/rest/api/hydrology/precipitation";
@@ -79,9 +91,29 @@ public class HmsServiceImpl implements HmsService {
             }
             HmsResponseModel hmsResponse = response.getEntity(HmsResponseModel.class);
             logger.info("hmsResponse: " + hmsResponse);
-        } catch (JsonProcessingException jpe) {
-            logger.error(jpe.getMessage(), jpe);
-            throw new SWCException("HMS error: " + jpe.getMessage());
+
+            if(hmsResponse != null && MapUtils.isNotEmpty(hmsResponse.getData())) {
+                StringBuilder sb = new StringBuilder();
+                for (Map.Entry<String, List<String>> dataEntry : hmsResponse.getData().entrySet()) {
+                    if(StringUtils.isBlank(dataEntry.getKey())
+                            || CollectionUtils.isEmpty(dataEntry.getValue())) {
+                        continue;
+                    }
+
+                    Date date = new SimpleDateFormat("yyyy-MM-dd HH").parse(dataEntry.getKey());
+                    String newDateFormat = new SimpleDateFormat("yyyy  M  d  H  m").format(date);
+
+                    sb.append(String.format("%-17s", stationId));
+                    sb.append(String.format("%-21s", newDateFormat));
+                    sb.append(String.format("%-10s", dataEntry.getValue().get(0)));
+                    sb.append("\n");
+                }
+                FileUtils.writeStringToFile(new File(filePath), sb.toString());
+                logger.info("Generated new hms data file: " + filePath);
+            }
+        } catch (ParseException | IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new SWCException("HMS error: " + e.getMessage());
         }
 
         return true;
