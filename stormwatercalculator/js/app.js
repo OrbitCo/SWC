@@ -4324,11 +4324,14 @@ app.controller('precipitationCtrl', function($scope)
   }
 
   $scope.selectBasinsChkbox = function(value) {
-    console.log(value);
-   if(value) {
-sessionStorage.basinsChkbox = value;
-      console.log('input field value: ');
-      console.log($("#yearsService").val());
+    console.log("select basins bhkbox value: " + value);
+    console.log("sessionStorage.basinsChkbox before: " + sessionStorage.basinsChkbox);
+    sessionStorage.basinsChkbox = value;
+    console.log("sessionStorage.basinsChkbox after: " + sessionStorage.basinsChkbox);
+
+    if(value) {
+        console.log('input field value: ');
+        console.log($("#yearsService").val());
     }
   /*  $.ajax(
       {
